@@ -13,6 +13,7 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 /**
 * @author generator@TaleLin
@@ -39,6 +40,11 @@ public class PmsSkuPriceInfoController {
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         return new DeletedVO();
+    }
+
+    @GetMapping("/skuId/{id}")
+    public List<PmsSkuPriceInfoDO> getSkuPriceInfoBySku(@PathVariable Long id) {
+        return skuPriceInfoService.findBySkuId(id);
     }
 
     @GetMapping("/{id}")

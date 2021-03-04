@@ -1,8 +1,11 @@
 package io.github.talelin.latticy.service;
 
+import io.github.talelin.latticy.model.PmsAttrDO;
 import io.github.talelin.latticy.model.PmsSkuInfoDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.talelin.latticy.model.PmsSpuInfoDO;
+
+import java.util.List;
 
 /**
  * <p>

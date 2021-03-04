@@ -98,6 +98,9 @@ create table pms_sku_price_info
     start_count          bigint comment '起始数量',
     end_count            bigint comment 'end count',
     price                bigint comment '真实价格',
+    create_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    update_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+    delete_time datetime(3)               DEFAULT NULL,
     primary key (id)
 );
 

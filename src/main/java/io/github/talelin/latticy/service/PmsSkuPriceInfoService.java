@@ -1,8 +1,11 @@
 package io.github.talelin.latticy.service;
 
+import io.github.talelin.latticy.model.PmsAttrDO;
 import io.github.talelin.latticy.model.PmsSkuPriceInfoDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.talelin.latticy.model.PmsSkuSaleAttrValueDO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +17,5 @@ import io.github.talelin.latticy.model.PmsSkuSaleAttrValueDO;
  */
 public interface PmsSkuPriceInfoService extends IService<PmsSkuPriceInfoDO> {
     boolean createSkuPrice(PmsSkuPriceInfoDO validator);
+    List<PmsSkuPriceInfoDO> findBySkuId(Long skuId);
 }
