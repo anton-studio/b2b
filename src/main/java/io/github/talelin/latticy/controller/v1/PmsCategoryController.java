@@ -13,6 +13,7 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 /**
 * @author generator@TaleLin
@@ -44,6 +45,11 @@ public class PmsCategoryController {
     @GetMapping("/{id}")
     public PmsCategoryDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
         return null;
+    }
+
+    @GetMapping("/list")
+    public List<PmsCategoryDO> list() {
+        return pmsCategoryService.getBaseMapper().selectList(null);
     }
 
     @GetMapping("/page")

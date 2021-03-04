@@ -1,6 +1,7 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import io.github.talelin.latticy.model.PmsCategoryDO;
 import io.github.talelin.latticy.service.PmsAttrGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 /**
 * @author generator@TaleLin
@@ -44,6 +46,11 @@ public class PmsAttrGroupController {
     @GetMapping("/{id}")
     public PmsAttrGroupDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
         return null;
+    }
+
+    @GetMapping("/list")
+    public List<PmsAttrGroupDO> list() {
+        return pmsAttrGroupService.getBaseMapper().selectList(null);
     }
 
     @GetMapping("/page")

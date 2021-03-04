@@ -13,6 +13,7 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 /**
  * 商品属性前端控制器
@@ -41,6 +42,11 @@ public class PmsAttrController {
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         return new DeletedVO();
+    }
+
+    @GetMapping("/groupId/{id}")
+    public List<PmsAttrDO> getByGroupId(@PathVariable(value = "id") Long groupId) {
+        return pmsAttrService.findByAttrGroupId(groupId);
     }
 
     @GetMapping("/{id}")
