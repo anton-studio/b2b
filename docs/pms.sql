@@ -97,7 +97,7 @@ create table pms_sku_price_info
     sku_id               bigint not null comment 'skuId',
     start_count          bigint comment '起始数量',
     end_count            bigint comment 'end count',
-    price                varchar(255) comment '真实价格',
+    price                bigint comment '真实价格',
     primary key (id)
 );
 
