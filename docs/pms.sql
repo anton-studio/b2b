@@ -55,7 +55,8 @@ create table pms_category
 create table pms_spu_info
 (
     id                   bigint not null auto_increment comment '商品id',
-    spu_name             varchar(200) comment '商品名称',
+    spu_name             varchar(200) comment 'spu model',
+    spu_title            varchar(200) comment '商品名称',
     spu_description      varchar(1000) comment '商品描述',
     catalog_id           bigint comment '所属分类id',
     attr_group_id        bigint comment '',

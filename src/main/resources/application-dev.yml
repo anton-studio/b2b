@@ -16,7 +16,7 @@ spring:
 
 # 开启权限拦截
 auth:
-  enabled: false
+  enabled: true
 
 
 # 开启http请求日志记录

@@ -23,6 +23,11 @@ public class PmsSpuInfoDO extends BaseModel {
     private String spuName;
 
     /**
+     * 商品名称
+     */
+    private String spuTitle;
+
+    /**
      * 商品描述
      */
     private String spuDescription;
