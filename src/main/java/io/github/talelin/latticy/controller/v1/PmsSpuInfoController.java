@@ -33,6 +33,13 @@ public class PmsSpuInfoController {
         return new CreatedVO();
     }
 
+    @GetMapping("detail/{id}")
+    public ProductDTO getProductDetail(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
+        // todo: create this endpoint
+        return null;
+    }
+
+
     @PostMapping("")
     public CreatedVO create(@RequestBody PmsSpuInfoDO validator) {
         pmsSpuInfoService.createSpuIfo(validator);
