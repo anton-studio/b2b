@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.service;
 
+import io.github.talelin.latticy.dto.ProductDTO;
 import io.github.talelin.latticy.model.PmsCategoryDO;
 import io.github.talelin.latticy.model.PmsSpuInfoDO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -14,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PmsSpuInfoService extends IService<PmsSpuInfoDO> {
     boolean createSpuIfo(PmsSpuInfoDO validator);
+
+    void createFullProduct(ProductDTO validator);
 }

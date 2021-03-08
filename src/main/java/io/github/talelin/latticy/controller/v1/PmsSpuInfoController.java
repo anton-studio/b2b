@@ -1,6 +1,7 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import io.github.talelin.latticy.dto.ProductDTO;
 import io.github.talelin.latticy.service.PmsSpuInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,12 @@ public class PmsSpuInfoController {
 
     @Autowired
     PmsSpuInfoService pmsSpuInfoService;
+
+    @PostMapping("/product")
+    public CreatedVO createProduct(@RequestBody ProductDTO validator) {
+        pmsSpuInfoService.createFullProduct(validator);
+        return new CreatedVO();
+    }
 
     @PostMapping("")
     public CreatedVO create(@RequestBody PmsSpuInfoDO validator) {
