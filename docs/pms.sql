@@ -10,7 +10,7 @@ drop table if exists pms_category;
 
 drop table if exists pms_sku_price_info;
 
-drop table if exists pms_product_files
+drop table if exists pms_product_files;
 
 drop table if exists pms_category_brand_relation;
 
@@ -112,10 +112,10 @@ create table pms_product_files
 (
     id      bigint not null auto_increment comment 'skuFileId',
     file_id              bigint comment 'fileId',
-    sku_id               bigint not null comment 'skuId',
+    sku_id               bigint comment 'skuId',
     spu_id               bigint not null comment 'spuId',
-    file_name            bigint comment 'file name',
-    file_url             bigint comment 'file url',
+    file_name            text comment 'file name',
+    file_url             text comment 'file url',
     create_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     update_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
     delete_time datetime(3)               DEFAULT NULL,
