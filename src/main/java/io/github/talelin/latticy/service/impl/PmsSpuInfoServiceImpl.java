@@ -165,4 +165,15 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
         // recreate other stuff
         createSpuRelatedEntity(pmsSpuInfoDO, validator);
     }
+
+    @Override
+    public void deleteProduct(Long id) {
+        // delete basic attr
+        productAttrValueService.deleteAttrBySpuId(id);
+
+        // delete sku
+        skuInfoService.deleteSkuBySpuId(id);
+
+        pmsSpuInfoMapper.deleteById(id);
+    }
 }

@@ -21,4 +21,6 @@ public interface PmsSpuInfoService extends IService<PmsSpuInfoDO> {
     ProductDTO getProductDetailById(Long id);
 
     void updateProduct(Long spuId, ProductDTO validator);
+
+    void deleteProduct(Long id);
 }

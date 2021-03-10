@@ -59,6 +59,7 @@ public class PmsSpuInfoController {
 
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        pmsSpuInfoService.deleteProduct(id);
         return new DeletedVO();
     }
 
