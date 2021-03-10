@@ -13,6 +13,7 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 /**
 * @author generator@TaleLin
@@ -29,6 +30,11 @@ public class PmsProductFilesController {
     public CreatedVO create(@RequestBody PmsProductFilesDO validator) {
         productFilesService.create(validator);
         return new CreatedVO();
+    }
+
+    @GetMapping("bySpuId/{id}")
+    public List<PmsProductFilesDO> getBySpuId(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
+        return productFilesService.getBySpuId(id);
     }
 
     @PutMapping("/{id}")
