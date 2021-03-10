@@ -176,6 +176,9 @@ create table pms_sku_sale_attr_value
     attr_name            varchar(200) comment '销售属性名',
     attr_value           varchar(200) comment '销售属性值',
     attr_sort            int comment '顺序',
+    create_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    update_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+    delete_time datetime(3)               DEFAULT NULL,
     primary key (id)
 );
 

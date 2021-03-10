@@ -14,4 +14,5 @@ import io.github.talelin.latticy.model.PmsSpuInfoDO;
  */
 public interface PmsProductAttrValueService extends IService<PmsProductAttrValueDO> {
     boolean createProductAttrValue(PmsProductAttrValueDO validator);
+    void deleteAttrBySpuId(Long spuId);
 }

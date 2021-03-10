@@ -17,4 +17,5 @@ import java.util.List;
  */
 public interface PmsSkuInfoService extends IService<PmsSkuInfoDO> {
     boolean createSkuIfo(PmsSkuInfoDO validator);
+    void deleteSkuBySpuId(Long spuId);
 }

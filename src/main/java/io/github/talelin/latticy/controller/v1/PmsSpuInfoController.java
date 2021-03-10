@@ -35,8 +35,7 @@ public class PmsSpuInfoController {
 
     @GetMapping("detail/{id}")
     public ProductDTO getProductDetail(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
-        // todo: create this endpoint
-        return null;
+        return pmsSpuInfoService.getProductDetailById(id);
     }
 
 
@@ -44,6 +43,13 @@ public class PmsSpuInfoController {
     public CreatedVO create(@RequestBody PmsSpuInfoDO validator) {
         pmsSpuInfoService.createSpuIfo(validator);
         return new CreatedVO();
+    }
+
+    @PutMapping("/updateDetail/{id}")
+    public UpdatedVO updateDetail(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id,
+                                  @RequestBody ProductDTO validator) {
+        pmsSpuInfoService.updateProduct(id, validator);
+        return new UpdatedVO();
     }
 
     @PutMapping("/{id}")

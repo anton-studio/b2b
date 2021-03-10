@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.talelin.latticy.model.PmsProductAttrValueDO;
 import io.github.talelin.latticy.mapper.PmsProductAttrValueMapper;
 import io.github.talelin.latticy.service.PmsProductAttrValueService;
@@ -27,5 +28,12 @@ public class PmsProductAttrValueServiceImpl extends ServiceImpl<PmsProductAttrVa
         PmsProductAttrValueDO productAttrValueDO = new PmsProductAttrValueDO();
         BeanUtils.copyProperties(validator, productAttrValueDO);
         return productAttrValueMapper.insert(productAttrValueDO) > 0;
+    }
+
+    @Override
+    public void deleteAttrBySpuId(Long spuId) {
+        QueryWrapper<PmsProductAttrValueDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(PmsProductAttrValueDO::getSpuId, spuId);
+        productAttrValueMapper.delete(wrapper);
     }
 }

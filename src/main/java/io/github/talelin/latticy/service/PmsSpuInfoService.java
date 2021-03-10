@@ -17,4 +17,8 @@ public interface PmsSpuInfoService extends IService<PmsSpuInfoDO> {
     boolean createSpuIfo(PmsSpuInfoDO validator);
 
     void createFullProduct(ProductDTO validator);
+
+    ProductDTO getProductDetailById(Long id);
+
+    void updateProduct(Long spuId, ProductDTO validator);
 }
