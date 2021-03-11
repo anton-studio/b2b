@@ -4,7 +4,7 @@ on:
     branches:
       - 'main'
 jobs:
-artifact:
+  artifact:
     name: Publish Artifact 
     runs-on: ubuntu-latest
     steps:
