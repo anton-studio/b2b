@@ -29,7 +29,7 @@ jobs:
             docker stop b2bapi
             docker rm b2bapi
             docker rmi stanleyyylau/b2b-system --force
-            docker run -p 5000:5000 -e "SPRING_PROFILES_ACTIVE=${{ secrets.SP_PROFILE_PROD }}" -e "prod_db_url=${{ secrets.PROD_DB_URL }}" -e "prod_db_user=${{ secrets.PROD_DB_USER }}" -e "prod_db_password=${{ secrets.PROD_DB_PASSWORD }}" --name b2bapi stanleyyylau/b2b-system
+            docker run -d -p 5000:5000 -e "SPRING_PROFILES_ACTIVE=${{ secrets.SP_PROFILE_PROD }}" -e "prod_db_url=${{ secrets.PROD_DB_URL }}" -e "prod_db_user=${{ secrets.PROD_DB_USER }}" -e "prod_db_password=${{ secrets.PROD_DB_PASSWORD }}" --name b2bapi stanleyyylau/b2b-system
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
