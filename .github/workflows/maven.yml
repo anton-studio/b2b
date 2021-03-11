@@ -26,8 +26,8 @@ jobs:
         uses: garygrossgarten/github-action-ssh@v0.6.4
         with:
           command: |
-            cd ~
-            ls -la
+            docker stop b2bapi
+            docker remove
             docker run -e "SPRING_PROFILES_ACTIVE=${{ secrets.SP_PROFILE_PROD }}" -e "prod_db_url=${{ secrets.PROD_DB_URL }}" -e "prod_db_user=${{ secrets.PROD_DB_USER }}" -e "prod_db_password=${{ secrets.PROD_DB_PASSWORD }}" --name b2bapi stanleyyylau/b2b-system
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
