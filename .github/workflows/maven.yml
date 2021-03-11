@@ -30,6 +30,5 @@ jobs:
             ls -la
             docker run -e "SPRING_PROFILES_ACTIVE=${{ secrets.SP_PROFILE_PROD }}" -e "prod_db_url=${{ secrets.PROD_DB_URL }}" -e "prod_db_user=${{ secrets.PROD_DB_USER }}" -e "prod_db_password=${{ secrets.PROD_DB_PASSWORD }}" --name b2bapi stanleyyylau/b2b-system
           host: ${{ secrets.HOST }}
-          username: root
-          passphrase: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.PRIVATE_KEY}}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
