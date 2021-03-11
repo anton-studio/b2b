@@ -6,4 +6,5 @@ RUN mvn clean package -DskipTests=true
 
 FROM openjdk:8-jre-alpine
 COPY  --from=MAVEN_ENV /build/target/latticy-sleeve-*.jar app.jar
+EXPOSE 5000
 ENTRYPOINT ["java", "-jar", "app.jar"]
