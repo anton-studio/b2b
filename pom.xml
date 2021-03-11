@@ -146,5 +146,13 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>anton-studio</name>
+            <url>https://maven.pkg.github.com/anton-studio/b2b</url>
+        </repository>
+    </distributionManagement>
+
 
 </project>
