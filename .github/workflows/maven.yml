@@ -21,7 +21,6 @@ jobs:
     name: Deploy to tencent cloud
     runs-on: ubuntu-latest
     needs: [docker]
-    uses: garygrossgarten/github-action-ssh@release
     steps:
       - name: run docker
         uses: garygrossgarten/github-action-ssh@release
