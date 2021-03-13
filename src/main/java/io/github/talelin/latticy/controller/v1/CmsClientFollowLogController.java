@@ -1,11 +1,11 @@
 package io.github.talelin.latticy.controller.v1;
 
 
-import io.github.talelin.latticy.model.CmsClientFilesDO;
-import io.github.talelin.latticy.service.CmsClientInfoService;
+import io.github.talelin.latticy.model.CmsContractDO;
+import io.github.talelin.latticy.service.CmsClientFollowLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import io.github.talelin.latticy.model.CmsClientInfoDO;
+import io.github.talelin.latticy.model.CmsClientFollowLogDO;
 import io.github.talelin.latticy.vo.CreatedVO;
 import io.github.talelin.latticy.vo.DeletedVO;
 import io.github.talelin.latticy.vo.PageResponseVO;
@@ -21,22 +21,20 @@ import java.util.List;
 * @since 2021-03-13
 */
 @RestController
-@RequestMapping("/v1/cms-client-info")
-public class CmsClientInfoController {
+@RequestMapping("/v1/cms-client-follow-log")
+public class CmsClientFollowLogController {
 
     @Autowired
-    CmsClientInfoService clientInfoService;
+    CmsClientFollowLogService clientFollowLogService;
 
     @PostMapping("")
-    public CreatedVO create(@RequestBody CmsClientInfoDO validator) {
-        clientInfoService.create(validator);
+    public CreatedVO create(@RequestBody CmsClientFollowLogDO validator) {
+        clientFollowLogService.create(validator);
         return new CreatedVO();
     }
 
     @PutMapping("/{id}")
-    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
-                            @RequestBody CmsClientInfoDO validator) {
-        clientInfoService.update(id, validator);
+    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id) {
         return new UpdatedVO();
     }
 
@@ -46,17 +44,17 @@ public class CmsClientInfoController {
     }
 
     @GetMapping("/{id}")
-    public CmsClientInfoDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
+    public CmsClientFollowLogDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
         return null;
     }
 
     @GetMapping("/list")
-    public List<CmsClientInfoDO> list(){
-        return clientInfoService.getBaseMapper().selectList(null);
+    public List<CmsClientFollowLogDO> list(){
+        return clientFollowLogService.getBaseMapper().selectList(null);
     }
 
     @GetMapping("/page")
-    public PageResponseVO<CmsClientInfoDO> page(
+    public PageResponseVO<CmsClientFollowLogDO> page(
             @RequestParam(name = "count", required = false, defaultValue = "10")
             @Min(value = 1, message = "{page.count.min}")
             @Max(value = 30, message = "{page.count.max}") Long count,
