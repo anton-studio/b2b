@@ -36,7 +36,7 @@ public class CmsClientInfoDO extends BaseModel {
     /**
      * should be int(enum), optimise later
      */
-    private String level;
+    private String clientLevel;
 
     /**
      * should be int(enum), optimise later

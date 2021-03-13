@@ -30,6 +30,8 @@ public class CmsContractDO extends BaseModel {
 
     private Long clientId;
 
+    private Long ownedBy;
+
     /**
      * modify later, by on currency
      */
