@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.talelin.latticy.mapper.CmsClientInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="io.github.talelin.latticy.model.CmsClientInfoDO">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="delete_time" property="deleteTime" />
+        <result column="country" property="country" />
+        <result column="client_name" property="clientName" />
+        <result column="company_name" property="companyName" />
+        <result column="contact_methods" property="contactMethods" />
+        <result column="code" property="code" />
+        <result column="level" property="level" />
+        <result column="industry" property="industry" />
+        <result column="source" property="source" />
+        <result column="owned_by" property="ownedBy" />
+    </resultMap>
+
+</mapper>
