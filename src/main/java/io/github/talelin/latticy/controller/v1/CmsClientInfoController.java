@@ -1,6 +1,10 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.github.talelin.core.annotation.LoginRequired;
+import io.github.talelin.core.annotation.Required;
+import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.model.CmsClientFilesDO;
 import io.github.talelin.latticy.service.CmsClientInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,27 +31,44 @@ public class CmsClientInfoController {
     @Autowired
     CmsClientInfoService clientInfoService;
 
+
     @PostMapping("")
-    public CreatedVO create(@RequestBody CmsClientInfoDO validator) {
+    @LoginRequired
+    public CreatedVO create(@RequestBody ClientDTO validator) {
         clientInfoService.create(validator);
         return new CreatedVO();
     }
 
     @PutMapping("/{id}")
     public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
-                            @RequestBody CmsClientInfoDO validator) {
+                            @RequestBody ClientDTO validator) {
         clientInfoService.update(id, validator);
         return new UpdatedVO();
     }
 
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        clientInfoService.deleteClient(id);
         return new DeletedVO();
+    }
+
+    @GetMapping("/detail/{id}")
+    public ClientDTO getDetail(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
+        return clientInfoService.getClientWithDetail(id);
     }
 
     @GetMapping("/{id}")
     public CmsClientInfoDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
         return null;
+    }
+
+    @GetMapping("/listSea")
+    public List<CmsClientInfoDO> listSea(){
+        QueryWrapper<CmsClientInfoDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(CmsClientInfoDO::getOwnedBy, 0L);
+        List<CmsClientInfoDO> cmsClientInfoDOS2 = clientInfoService.getBaseMapper().selectList(wrapper);
+        // todo: also get ownedBy: null
+        return cmsClientInfoDOS2;
     }
 
     @GetMapping("/list")

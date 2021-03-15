@@ -29,6 +29,7 @@ create table cms_client_interest
     client_id            bigint,
     product_id           bigint comment '0 id means product need to be purchased',
     notes                text comment 'if product_id is 0, needs to add a note',
+    num                  text,
     create_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     update_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
     delete_time datetime(3)               DEFAULT NULL,

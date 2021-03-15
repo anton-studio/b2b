@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.service;
 
+import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.model.CmsClientInfoDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,7 +14,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CmsClientInfoService extends IService<CmsClientInfoDO> {
 
-    boolean create(CmsClientInfoDO validator);
+    boolean create(ClientDTO validator);
 
-    void update(Long id, CmsClientInfoDO validator);
+    void update(Long id, ClientDTO validator);
+
+    void deleteClient(Long id);
+
+    ClientDTO getClientWithDetail(Long id);
 }
