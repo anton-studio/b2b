@@ -4,6 +4,7 @@ package io.github.talelin.latticy.controller.v1;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.core.annotation.Required;
+import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.model.CmsClientFilesDO;
 import io.github.talelin.latticy.service.CmsClientInfoService;
@@ -64,11 +65,17 @@ public class CmsClientInfoController {
 
     @GetMapping("/listSea")
     public List<CmsClientInfoDO> listSea(){
-        QueryWrapper<CmsClientInfoDO> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(CmsClientInfoDO::getOwnedBy, 0L);
-        List<CmsClientInfoDO> cmsClientInfoDOS2 = clientInfoService.getBaseMapper().selectList(wrapper);
-        // todo: also get ownedBy: null
-        return cmsClientInfoDOS2;
+        return clientInfoService.getPublicSeaClients();
+    }
+
+    @GetMapping("/acquireClient/{id}")
+    @LoginRequired
+    public UpdatedVO acquireClient(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id){
+        CmsClientInfoDO cmsClientInfoDO = clientInfoService.getBaseMapper().selectById(id);
+        Long userId = LocalUser.getLocalUser().getId();
+        cmsClientInfoDO.setOwnedBy(userId);
+        clientInfoService.getBaseMapper().updateById(cmsClientInfoDO);
+        return new UpdatedVO();
     }
 
     @GetMapping("/list")

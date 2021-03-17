@@ -2,6 +2,7 @@ package io.github.talelin.latticy.controller.v1;
 
 
 import io.github.talelin.latticy.model.CmsClientFollowLogDO;
+import io.github.talelin.latticy.model.PmsProductFilesDO;
 import io.github.talelin.latticy.service.CmsClientFilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,11 @@ public class CmsClientFilesController {
     public CreatedVO create(@RequestBody CmsClientFilesDO validator) {
         clientFilesService.create(validator);
         return new CreatedVO();
+    }
+
+    @GetMapping("/byClientId/{id}")
+    public List<CmsClientFilesDO> getByClientId(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
+        return clientFilesService.getByClientId(id);
     }
 
     @PutMapping("/{id}")

@@ -42,6 +42,7 @@ create table cms_client_follow_log
     client_id            bigint,
     user_id              bigint comment 'followed by which user',
     content              text comment 'follow content',
+    star int,
     create_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) comment 'means follow time',
     update_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) comment 'nearly not possible to update this',
     delete_time datetime(3)               DEFAULT NULL,

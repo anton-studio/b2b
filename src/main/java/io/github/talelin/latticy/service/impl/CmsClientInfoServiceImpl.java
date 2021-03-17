@@ -16,6 +16,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -108,6 +110,11 @@ public class CmsClientInfoServiceImpl extends ServiceImpl<CmsClientInfoMapper, C
         // get client interests
         clientDTO.setInterestProducts(clientInterestService.getByClientId(id));
         return clientDTO;
+    }
+
+    @Override
+    public List<CmsClientInfoDO> getPublicSeaClients() {
+        return clientInfoMapper.getPublicSeaClient();
     }
 
 }

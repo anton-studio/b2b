@@ -4,6 +4,8 @@ import io.github.talelin.latticy.model.CmsClientInfoDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -15,5 +17,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CmsClientInfoMapper extends BaseMapper<CmsClientInfoDO> {
-
+    List<CmsClientInfoDO> getPublicSeaClient();
 }

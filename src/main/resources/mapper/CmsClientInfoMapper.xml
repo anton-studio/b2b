@@ -13,10 +13,13 @@
         <result column="company_name" property="companyName" />
         <result column="contact_methods" property="contactMethods" />
         <result column="code" property="code" />
-        <result column="level" property="level" />
+        <result column="client_level" property="clientLevel" />
         <result column="industry" property="industry" />
         <result column="source" property="source" />
         <result column="owned_by" property="ownedBy" />
     </resultMap>
+    <select id="getPublicSeaClient" resultMap="BaseResultMap">
+        select * from cms_client_info where owned_by IS NULL or owned_by=0
+    </select>
 
 </mapper>

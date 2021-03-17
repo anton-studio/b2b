@@ -4,6 +4,8 @@ import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.model.CmsClientInfoDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -21,4 +23,6 @@ public interface CmsClientInfoService extends IService<CmsClientInfoDO> {
     void deleteClient(Long id);
 
     ClientDTO getClientWithDetail(Long id);
+
+    List<CmsClientInfoDO> getPublicSeaClients();
 }

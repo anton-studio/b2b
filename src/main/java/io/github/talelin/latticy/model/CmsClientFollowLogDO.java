@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * @author generator@TaleLin
  * @since 2021-03-13
@@ -18,6 +20,10 @@ public class CmsClientFollowLogDO extends BaseModel {
 
 
     private Long clientId;
+
+    private Integer star;
+
+    private Date followTime;
 
     /**
      * followed by which user

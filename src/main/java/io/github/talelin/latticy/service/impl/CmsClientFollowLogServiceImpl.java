@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.service.impl;
 
+import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.model.CmsClientFollowLogDO;
 import io.github.talelin.latticy.mapper.CmsClientFollowLogMapper;
 import io.github.talelin.latticy.service.CmsClientFollowLogService;
@@ -27,6 +28,8 @@ public class CmsClientFollowLogServiceImpl extends ServiceImpl<CmsClientFollowLo
     public boolean create(CmsClientFollowLogDO validator) {
         CmsClientFollowLogDO cmsClientFollowLogDO = new CmsClientFollowLogDO();
         BeanUtils.copyProperties(validator, cmsClientFollowLogDO);
+        Long userId = LocalUser.getLocalUser().getId();
+        cmsClientFollowLogDO.setUserId(userId);
         return clientFollowLogMapper.insert(cmsClientFollowLogDO) > 0;
     }
 }

@@ -1,6 +1,8 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.latticy.model.CmsContractDO;
 import io.github.talelin.latticy.service.CmsClientFollowLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ public class CmsClientFollowLogController {
     CmsClientFollowLogService clientFollowLogService;
 
     @PostMapping("")
+    @LoginRequired
     public CreatedVO create(@RequestBody CmsClientFollowLogDO validator) {
         clientFollowLogService.create(validator);
         return new CreatedVO();
@@ -46,6 +49,13 @@ public class CmsClientFollowLogController {
     @GetMapping("/{id}")
     public CmsClientFollowLogDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
         return null;
+    }
+
+    @GetMapping("/listByClientId/{id}")
+    public List<CmsClientFollowLogDO> listByClientId(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id){
+        QueryWrapper<CmsClientFollowLogDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(CmsClientFollowLogDO::getClientId, id);
+        return clientFollowLogService.getBaseMapper().selectList(wrapper);
     }
 
     @GetMapping("/list")
