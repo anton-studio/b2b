@@ -3,6 +3,7 @@ package io.github.talelin.latticy.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.talelin.latticy.dto.ContractDTO;
 import io.github.talelin.latticy.mapper.ImsContractProductMapper;
+import io.github.talelin.latticy.model.CmsContractDO;
 import io.github.talelin.latticy.model.ImsContractDO;
 import io.github.talelin.latticy.mapper.ImsContractMapper;
 import io.github.talelin.latticy.model.ImsContractProductDO;
@@ -53,5 +54,26 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
 
         // delete contract
         contractMapper.deleteById(id);
+    }
+
+    @Override
+    public void updateContract(Long id, ContractDTO validator) {
+        ImsContractDO imsContractDO = new ImsContractDO();
+        BeanUtils.copyProperties(validator, imsContractDO);
+        imsContractDO.setId(id);
+        contractMapper.updateById(imsContractDO);
+
+        // delete contract
+        QueryWrapper<ImsContractProductDO> cpWrapper = new QueryWrapper<>();
+        cpWrapper.lambda().eq(ImsContractProductDO::getContractId, id);
+        contractProductMapper.delete(cpWrapper);
+
+        // add contract
+        for (Long spuId : validator.getSpuIds()) {
+            ImsContractProductDO imsContractProductDO = new ImsContractProductDO();
+            imsContractProductDO.setContractId(imsContractDO.getId());
+            imsContractProductDO.setSpuId(spuId);
+            contractProductMapper.insert(imsContractProductDO);
+        }
     }
 }

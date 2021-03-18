@@ -17,4 +17,6 @@ public interface ImsContractService extends IService<ImsContractDO> {
     void createContract(ContractDTO validator);
 
     void delete(Long id);
+
+    void updateContract(Long id, ContractDTO validator);
 }
