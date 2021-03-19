@@ -14,6 +14,7 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,6 +32,14 @@ public class PmsSpuInfoController {
     public CreatedVO createProduct(@RequestBody ProductDTO validator) {
         pmsSpuInfoService.createFullProduct(validator);
         return new CreatedVO();
+    }
+
+    // this endpoint is for printing
+    @GetMapping("detailForPrint")
+    public List<PmsSpuInfoDO> getProductDetailForPrint(@RequestParam(value = "spus") String spus) {
+        String[] split = spus.split(",");
+        List<PmsSpuInfoDO> pmsSpuInfoDOS = pmsSpuInfoService.getBaseMapper().selectBatchIds(Arrays.asList(split));
+        return pmsSpuInfoDOS;
     }
 
     @GetMapping("detail/{id}")

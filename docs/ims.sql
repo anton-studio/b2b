@@ -30,3 +30,14 @@ create table ims_contract_product
     delete_time datetime(3)               DEFAULT NULL,
     primary key (id)
 );
+
+create table ims_print_template
+(
+    id                   bigint not null auto_increment comment 'id',
+    template_name text,
+    template_content text,
+    create_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    update_time datetime(3)      NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) comment 'if 30 days not update, put to public sea, update means 1, change basic info, 2, create client follow log',
+    delete_time datetime(3)               DEFAULT NULL,
+    primary key (id)
+);
