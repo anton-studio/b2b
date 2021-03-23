@@ -3,7 +3,7 @@
 lin:
   file:
     # 文件服务域名
-    domain: http://localhost:5000/
+    domain: https://b2b-anton.oss-cn-shenzhen.aliyuncs.com/
     # 排除文件类型
     exclude:
     # 包括文件类型
@@ -21,6 +21,9 @@ lin:
     single-limit: 200000MB
     # 本地文件保存位置
     store-dir: assets/
+    aliyun:
+      access-key-id: ${ali_access_key}
+      access-key-secret: ${ali_access_secret}
 spring:
   servlet:
     multipart:
