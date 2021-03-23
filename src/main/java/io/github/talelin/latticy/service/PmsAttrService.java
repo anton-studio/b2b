@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.service;
 
+import io.github.talelin.latticy.dto.PmsAttrDTO;
 import io.github.talelin.latticy.model.PmsAttrDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.talelin.latticy.model.PmsAttrGroupDO;
@@ -16,5 +17,6 @@ import java.util.List;
  */
 public interface PmsAttrService extends IService<PmsAttrDO> {
     boolean createAttr(PmsAttrDO validator);
-    List<PmsAttrDO> findByAttrGroupId(Long attrGroupId);
+    List<PmsAttrDTO> findByAttrGroupId(Long attrGroupId);
+    void delete(Long id);
 }

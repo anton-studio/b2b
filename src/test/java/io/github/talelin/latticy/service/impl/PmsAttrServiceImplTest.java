@@ -26,7 +26,7 @@ public class PmsAttrServiceImplTest {
 
     @Test
     public void findByAttrGroupId() {
-        List<PmsAttrDO> attrDOS = pmsAttrService.findByAttrGroupId(1L);
-        System.out.println(attrDOS);
+//        List<PmsAttrDO> attrDOS = pmsAttrService.findByAttrGroupId(1L);
+//        System.out.println(attrDOS);
     }
 }

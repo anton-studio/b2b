@@ -1,7 +1,11 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import io.github.talelin.latticy.dto.PmsAttrDTO;
+import io.github.talelin.latticy.model.PmsProductAttrValueDO;
 import io.github.talelin.latticy.service.PmsAttrService;
+import io.github.talelin.latticy.service.PmsProductAttrValueService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.github.talelin.latticy.model.PmsAttrDO;
@@ -28,6 +32,9 @@ public class PmsAttrController {
     @Autowired
     PmsAttrService pmsAttrService;
 
+    @Autowired
+    PmsProductAttrValueService productAttrValueService;
+
     @PostMapping("")
     public CreatedVO create(@RequestBody PmsAttrDO pmsAttrDO) {
         pmsAttrService.createAttr(pmsAttrDO);
@@ -41,17 +48,23 @@ public class PmsAttrController {
 
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        pmsAttrService.delete(id);
         return new DeletedVO();
     }
 
     @GetMapping("/groupId/{id}")
-    public List<PmsAttrDO> getByGroupId(@PathVariable(value = "id") Long groupId) {
+    public List<PmsAttrDTO> getByGroupId(@PathVariable(value = "id") Long groupId) {
         return pmsAttrService.findByAttrGroupId(groupId);
     }
 
     @GetMapping("/{id}")
-    public PmsAttrDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
-        return null;
+    public PmsAttrDTO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
+        PmsAttrDO pmsAttrDO = pmsAttrService.getBaseMapper().selectById(id);
+        List<PmsProductAttrValueDO> attrValueList = productAttrValueService.getByAttrId(id);
+        PmsAttrDTO pmsAttrDTO = new PmsAttrDTO();
+//        BeanUtils.copyProperties(pmsAttrDO, pmsAttrDTO);
+//        pmsAttrDTO.setValueList(attrValueList);
+        return pmsAttrDTO;
     }
 
     @GetMapping("/page")
