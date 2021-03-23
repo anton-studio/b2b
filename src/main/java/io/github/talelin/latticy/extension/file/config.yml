@@ -22,8 +22,8 @@ lin:
     # 本地文件保存位置
     store-dir: assets/
     aliyun:
-      access-key-id: ${ali_access_key}
-      access-key-secret: ${ali_access_secret}
+      access-key-id: ${ali_access_key:aaa}
+      access-key-secret: ${ali_access_secret:bbb}
 spring:
   servlet:
     multipart:

@@ -3,6 +3,7 @@ package io.github.talelin.latticy.controller.v1;
 
 import io.github.talelin.latticy.model.PmsCategoryDO;
 import io.github.talelin.latticy.service.PmsAttrGroupService;
+import io.github.talelin.latticy.service.PmsProductAttrValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.github.talelin.latticy.model.PmsAttrGroupDO;
@@ -27,6 +28,9 @@ public class PmsAttrGroupController {
     @Autowired
     PmsAttrGroupService pmsAttrGroupService;
 
+    @Autowired
+    PmsProductAttrValueService pmsProductAttrValueService;
+
     @PostMapping("")
     public CreatedVO create(@RequestBody PmsAttrGroupDO validator) {
         pmsAttrGroupService.createAttrGroup(validator);
@@ -40,6 +44,8 @@ public class PmsAttrGroupController {
 
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        pmsAttrGroupService.getBaseMapper().deleteById(id);
+        pmsProductAttrValueService.deleteByAttrId(id);
         return new DeletedVO();
     }
 

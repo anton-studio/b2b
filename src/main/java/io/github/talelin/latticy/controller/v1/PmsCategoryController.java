@@ -33,18 +33,21 @@ public class PmsCategoryController {
     }
 
     @PutMapping("/{id}")
-    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id) {
+    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
+                            @RequestBody PmsCategoryDO validator) {
+        pmsCategoryService.getBaseMapper().updateById(validator);
         return new UpdatedVO();
     }
 
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        pmsCategoryService.getBaseMapper().deleteById(id);
         return new DeletedVO();
     }
 
     @GetMapping("/{id}")
     public PmsCategoryDO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
-        return null;
+        return pmsCategoryService.getBaseMapper().selectById(id);
     }
 
     @GetMapping("/list")
