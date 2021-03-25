@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author generator@TaleLin
- * @since 2021-03-04
+ * @since 2021-03-25
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -56,6 +56,23 @@ public class PmsSkuInfoDO extends BaseModel {
      * 销量
      */
     private Long saleCount;
+
+    private String size;
+
+    /**
+     * kg
+     */
+    private Long weight;
+
+    private Long quantityPerCarton;
+
+    private Long netWeightPerCarton;
+
+    private Long grossWeightPerCarton;
+
+    private String cartonMeasurement;
+
+    private String cartonSize;
 
 
 }

@@ -15,6 +15,8 @@
         <result column="publish_status" property="publishStatus" />
         <result column="img_url" property="imgUrl" />
         <result column="price" property="price" />
+        <result column="spu_title" property="spuTitle" />
+        <result column="printable_attr_ids" property="printableAttrIds" />
     </resultMap>
 
 </mapper>

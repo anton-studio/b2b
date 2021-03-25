@@ -21,8 +21,15 @@
         <result column="payment_status" property="paymentStatus" />
         <result column="payment_pre_amount" property="paymentPreAmount" />
         <result column="payment_other_notes" property="paymentOtherNotes" />
+        <result column="owned_by" property="ownedBy" />
         <result column="raw_cost" property="rawCost" />
         <result column="review_status" property="reviewStatus" />
+        <result column="delivery_address" property="deliveryAddress" />
+        <result column="shipping_cost" property="shippingCost" />
+        <result column="transaction_fee" property="transactionFee" />
+        <result column="terms_of_sale" property="termsOfSale" />
+        <result column="insurance_cost" property="insuranceCost" />
+        <result column="additional_cost" property="additionalCost" />
     </resultMap>
 
 </mapper>

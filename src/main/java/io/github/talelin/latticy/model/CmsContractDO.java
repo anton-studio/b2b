@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author generator@TaleLin
- * @since 2021-03-13
+ * @since 2021-03-25
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,8 +29,6 @@ public class CmsContractDO extends BaseModel {
     private LocalDate deliveryDate;
 
     private Long clientId;
-
-    private Long ownedBy;
 
     /**
      * modify later, by on currency
@@ -71,6 +69,11 @@ public class CmsContractDO extends BaseModel {
     private String paymentOtherNotes;
 
     /**
+     * user id
+     */
+    private Long ownedBy;
+
+    /**
      * not modify by sales, only admin
      */
     private String rawCost;
@@ -79,6 +82,24 @@ public class CmsContractDO extends BaseModel {
      * 待审批|已审批 -- 业务填写款项收齐提示是否进入审批状态 审批状态 will show up in admins panel
      */
     private String reviewStatus;
+
+    /**
+     * if this address is null, use client address for contract printing
+     */
+    private String deliveryAddress;
+
+    /**
+     * usd
+     */
+    private Long shippingCost;
+
+    private Long transactionFee;
+
+    private String termsOfSale;
+
+    private String insuranceCost;
+
+    private String additionalCost;
 
 
 }

@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author generator@TaleLin
- * @since 2021-03-17
+ * @since 2021-03-25
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,6 +22,16 @@ public class ImsContractProductDO extends BaseModel {
     private Long spuId;
 
     private Long skuId;
+
+    /**
+     * contract price(real unit price)
+     */
+    private Long price;
+
+    /**
+     * write your own
+     */
+    private String specialRequest;
 
 
 }

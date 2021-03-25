@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author generator@TaleLin
- * @since 2021-03-04
+ * @since 2021-03-25
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -21,11 +21,6 @@ public class PmsSpuInfoDO extends BaseModel {
      * 商品名称
      */
     private String spuName;
-
-    /**
-     * 商品名称
-     */
-    private String spuTitle;
 
     /**
      * 商品描述
@@ -53,6 +48,10 @@ public class PmsSpuInfoDO extends BaseModel {
      * 价格区间, 真实价格根据采购数量决定
      */
     private String price;
+
+    private String spuTitle;
+
+    private String printableAttrIds;
 
 
 }

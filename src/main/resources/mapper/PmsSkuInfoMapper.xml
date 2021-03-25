@@ -16,6 +16,13 @@
         <result column="sku_title" property="skuTitle" />
         <result column="price" property="price" />
         <result column="sale_count" property="saleCount" />
+        <result column="size" property="size" />
+        <result column="weight" property="weight" />
+        <result column="quantity_per_carton" property="quantityPerCarton" />
+        <result column="net_weight_per_carton" property="netWeightPerCarton" />
+        <result column="gross_weight_per_carton" property="grossWeightPerCarton" />
+        <result column="carton_measurement" property="cartonMeasurement" />
+        <result column="carton_size" property="cartonSize" />
     </resultMap>
 
 </mapper>

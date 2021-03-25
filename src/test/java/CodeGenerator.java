@@ -26,7 +26,7 @@ public class CodeGenerator {
         globalConfig
                 .setAuthor("generator@TaleLin")
                 .setOpen(false)
-                .setFileOverride(false)
+                .setFileOverride(true)
                 .setIdType(IdType.AUTO)
                 .setBaseResultMap(true)
                 .setEntityName("%sDO")
@@ -36,7 +36,7 @@ public class CodeGenerator {
         // 数据源配置
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig
-                .setUrl("jdbc:mysql://localhost:3306/b2b?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                .setUrl("jdbc:mysql://rm-j6c36wo53l6nj6dy1vo.mysql.rds.aliyuncs.com:3306/b2b?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
                 .setDriverName("com.mysql.cj.jdbc.Driver")
                 .setUsername("root")
                 .setPassword("root");

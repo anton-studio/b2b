@@ -17,6 +17,7 @@
         <result column="industry" property="industry" />
         <result column="source" property="source" />
         <result column="owned_by" property="ownedBy" />
+        <result column="address" property="address" />
     </resultMap>
     <select id="getPublicSeaClient" resultMap="BaseResultMap">
         select * from cms_client_info where owned_by IS NULL or owned_by=0

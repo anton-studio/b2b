@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author generator@TaleLin
- * @since 2021-03-13
+ * @since 2021-03-25
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -49,6 +49,8 @@ public class CmsClientInfoDO extends BaseModel {
      * user id, if not owned by anyone, should be in public sea(公海)
      */
     private Long ownedBy;
+
+    private String address;
 
 
 }
