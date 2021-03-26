@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author generator@TaleLin
- * @since 2021-03-17
+ * @since 2021-03-26
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -39,6 +39,24 @@ public class ImsContractDO extends BaseModel {
     private Long rawCost;
 
     private String reviewStatus;
+
+    /**
+     * if this address is null, use client address for contract printing
+     */
+    private String deliveryAddress;
+
+    /**
+     * usd
+     */
+    private Long shippingCost;
+
+    private Long transactionFee;
+
+    private String termsOfSale;
+
+    private String insuranceCost;
+
+    private String additionalCost;
 
 
 }

@@ -1,6 +1,8 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.github.talelin.latticy.model.PmsSkuInfoDO;
 import io.github.talelin.latticy.service.PmsSkuPriceInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,13 @@ public class PmsSkuPriceInfoController {
     public CreatedVO create(@RequestBody PmsSkuPriceInfoDO validator) {
         skuPriceInfoService.createSkuPrice(validator);
         return new CreatedVO();
+    }
+
+    @GetMapping("/getBySku/{id}")
+    public List<PmsSkuPriceInfoDO> getBySku(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        QueryWrapper<PmsSkuPriceInfoDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(PmsSkuPriceInfoDO::getSkuId, id);
+        return skuPriceInfoService.getBaseMapper().selectList(wrapper);
     }
 
     @PutMapping("/{id}")

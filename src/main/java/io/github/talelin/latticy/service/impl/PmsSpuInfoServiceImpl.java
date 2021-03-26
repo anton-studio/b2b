@@ -10,8 +10,10 @@ import io.github.talelin.latticy.service.PmsProductAttrValueService;
 import io.github.talelin.latticy.service.PmsSkuInfoService;
 import io.github.talelin.latticy.service.PmsSpuInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.github.talelin.latticy.vo.SpuInfoWithAttr;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -175,5 +177,21 @@ public class PmsSpuInfoServiceImpl extends ServiceImpl<PmsSpuInfoMapper, PmsSpuI
         skuInfoService.deleteSkuBySpuId(id);
 
         pmsSpuInfoMapper.deleteById(id);
+    }
+
+    @Override
+    public List<SpuInfoWithAttr> getSpuListByIds(List<Long> ids) {
+        List<PmsSpuInfoDO> pmsSpuInfoDOS = this.getBaseMapper().selectBatchIds(ids);
+        List<SpuInfoWithAttr> spuInfoWithAttrList = new ArrayList<>();
+        for (PmsSpuInfoDO pmsSpuInfoDO : pmsSpuInfoDOS) {
+            SpuInfoWithAttr spuInfoWithAttr = new SpuInfoWithAttr();
+            BeanUtils.copyProperties(pmsSpuInfoDO, spuInfoWithAttr);
+            LambdaQueryWrapper<PmsProductAttrValueDO> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(PmsProductAttrValueDO::getSpuId, pmsSpuInfoDO.getId());
+            List<PmsProductAttrValueDO> productAttrValueDOList = productAttrValueMapper.selectList(wrapper);
+            spuInfoWithAttr.setBasicAttr(productAttrValueDOList);
+            spuInfoWithAttrList.add(spuInfoWithAttr);
+        }
+        return spuInfoWithAttrList;
     }
 }

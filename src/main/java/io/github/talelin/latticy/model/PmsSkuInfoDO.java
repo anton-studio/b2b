@@ -50,7 +50,7 @@ public class PmsSkuInfoDO extends BaseModel {
     /**
      * 价格区间, 真实价格根据采购数量决定
      */
-    private String price;
+//    private String price;
 
     /**
      * 销量

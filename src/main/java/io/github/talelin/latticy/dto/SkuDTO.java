@@ -1,9 +1,6 @@
 package io.github.talelin.latticy.dto;
 
-import io.github.talelin.latticy.model.PmsSkuInfoDO;
-import io.github.talelin.latticy.model.PmsSkuPriceInfoDO;
-import io.github.talelin.latticy.model.PmsSkuSaleAttrValueDO;
-import io.github.talelin.latticy.model.PmsSpuInfoDO;
+import io.github.talelin.latticy.model.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

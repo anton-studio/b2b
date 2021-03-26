@@ -23,6 +23,8 @@ public class ImsContractProductDO extends BaseModel {
 
     private Long skuId;
 
+    private Long quantity;
+
     /**
      * contract price(real unit price)
      */

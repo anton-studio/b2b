@@ -12,6 +12,7 @@
         <result column="spu_id" property="spuId" />
         <result column="sku_id" property="skuId" />
         <result column="price" property="price" />
+        <result column="quantity" property="quantity" />
         <result column="special_request" property="specialRequest" />
     </resultMap>
 

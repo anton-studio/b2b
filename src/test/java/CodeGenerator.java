@@ -36,7 +36,7 @@ public class CodeGenerator {
         // 数据源配置
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig
-                .setUrl("jdbc:mysql://rm-j6c36wo53l6nj6dy1vo.mysql.rds.aliyuncs.com:3306/b2b?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
+                .setUrl("jdbc:mysql://localhost:3306/b2b?allowPublicKeyRetrieval=true&useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai")
                 .setDriverName("com.mysql.cj.jdbc.Driver")
                 .setUsername("root")
                 .setPassword("root");
@@ -95,10 +95,10 @@ public class CodeGenerator {
     private static Map<String, String> getPathInfo() {
         Map<String, String> pathInfo = new HashMap<>();
         pathInfo.put(ConstVal.ENTITY_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/model");
-        pathInfo.put(ConstVal.MAPPER_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/mapper");
-        pathInfo.put(ConstVal.SERVICE_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/service");
-        pathInfo.put(ConstVal.SERVICE_IMPL_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/service/impl");
-        pathInfo.put(ConstVal.CONTROLLER_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/controller/v1");
+//        pathInfo.put(ConstVal.MAPPER_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/mapper");
+//        pathInfo.put(ConstVal.SERVICE_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/service");
+//        pathInfo.put(ConstVal.SERVICE_IMPL_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/service/impl");
+//        pathInfo.put(ConstVal.CONTROLLER_PATH, System.getProperty("user.dir") + "/src/main/java/io/github/talelin/latticy/controller/v1");
         pathInfo.put(ConstVal.XML_PATH, System.getProperty("user.dir") + "/src/main/resources/mapper");
         return pathInfo;
     }

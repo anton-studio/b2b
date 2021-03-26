@@ -1,6 +1,7 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.talelin.latticy.service.PmsSkuInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 /**
 * @author generator@TaleLin
@@ -39,6 +41,11 @@ public class PmsSkuInfoController {
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         return new DeletedVO();
+    }
+
+    @GetMapping("/list")
+    public List<PmsSkuInfoDO> list() {
+        return pmsSkuInfoService.getBaseMapper().selectList(null);
     }
 
     @GetMapping("/{id}")

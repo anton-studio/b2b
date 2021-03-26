@@ -20,6 +20,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author generator@TaleLin
@@ -34,6 +35,12 @@ public class ImsContractController {
 
     @Autowired
     ImsContractProductMapper contractProductMapper;
+
+    @GetMapping("/getPrintData/{id}")
+    @LoginRequired
+    public PrintDataVO getDataForPrint(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        return contractService.getDataForPrint(id);
+    }
 
     @PostMapping("")
     public CreatedVO create(@RequestBody ContractDTO validator) {
@@ -54,19 +61,8 @@ public class ImsContractController {
     }
 
     @GetMapping("/{id}")
-    public ContractDetailVO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
-        ImsContractDO imsContractDO = contractService.getBaseMapper().selectById(id);
-        QueryWrapper<ImsContractProductDO> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(ImsContractProductDO::getContractId, id);
-        List<ImsContractProductDO> imsContractProductDOS = contractProductMapper.selectList(wrapper);
-        List<Long> spuIds = new ArrayList<>();
-        for (ImsContractProductDO imsContractProductDO : imsContractProductDOS) {
-            spuIds.add(imsContractProductDO.getSpuId());
-        }
-        ContractDetailVO contractDetailVO = new ContractDetailVO();
-        BeanUtils.copyProperties(imsContractDO, contractDetailVO);
-        contractDetailVO.setSpuIds(spuIds);
-        return contractDetailVO;
+    public ContractDTO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
+        return contractService.getContractDetail(id);
     }
 
     @GetMapping("/list")

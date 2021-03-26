@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.service;
 
+import io.github.talelin.latticy.dto.SkuDTO;
 import io.github.talelin.latticy.model.PmsAttrDO;
 import io.github.talelin.latticy.model.PmsSkuInfoDO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -18,4 +19,5 @@ import java.util.List;
 public interface PmsSkuInfoService extends IService<PmsSkuInfoDO> {
     boolean createSkuIfo(PmsSkuInfoDO validator);
     void deleteSkuBySpuId(Long spuId);
+    List<SkuDTO> getSkuDtoByIds(List<Long> ids);
 }
