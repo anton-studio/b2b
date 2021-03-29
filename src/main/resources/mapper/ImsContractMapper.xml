@@ -12,6 +12,7 @@
         <result column="delivery_time" property="deliveryTime" />
         <result column="client_id" property="clientId" />
         <result column="total_amount" property="totalAmount" />
+        <result column="prepay_amount" property="prepayAmount" />
         <result column="actual_delivery_fee" property="actualDeliveryFee" />
         <result column="other_fee" property="otherFee" />
         <result column="payment_method" property="paymentMethod" />

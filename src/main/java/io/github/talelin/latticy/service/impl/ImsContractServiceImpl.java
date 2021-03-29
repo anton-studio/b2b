@@ -53,6 +53,9 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
         ImsContractDO imsContractDO = new ImsContractDO();
         BeanUtils.copyProperties(validator, imsContractDO);
 
+        Long id = LocalUser.getLocalUser().getId();
+        imsContractDO.setOwnedBy(id);
+
         this.getBaseMapper().insert(imsContractDO);
 
         for (ImsContractProductDO spuId : validator.getSkus()) {
@@ -126,6 +129,10 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
         ImsContractDO imsContractDO = new ImsContractDO();
         BeanUtils.copyProperties(validator, imsContractDO);
         imsContractDO.setId(id);
+
+        Long ownById = LocalUser.getLocalUser().getId();
+        imsContractDO.setOwnedBy(ownById);
+
         contractMapper.updateById(imsContractDO);
 
         // delete contract products

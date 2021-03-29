@@ -65,9 +65,24 @@ public class ImsContractController {
         return contractService.getContractDetail(id);
     }
 
+    @GetMapping("/listPending")
+    @LoginRequired
+    public List<ImsContractDO> listPending(){
+        QueryWrapper<ImsContractDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(ImsContractDO::getReviewStatus, "审核中");
+        return contractService.getBaseMapper().selectList(wrapper);
+    }
+
     @GetMapping("/list")
+    @LoginRequired
     public List<ImsContractDO> list(){
-        return contractService.getBaseMapper().selectList(null);
+        Long id = LocalUser.getLocalUser().getId();
+        QueryWrapper<ImsContractDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(ImsContractDO::getOwnedBy, id);
+        List<Long> adminIds = new ArrayList<>();
+        adminIds.add(1l);
+        Boolean showAll = adminIds.contains(id);
+        return contractService.getBaseMapper().selectList(showAll ? null : wrapper);
     }
 
     @GetMapping("/page")

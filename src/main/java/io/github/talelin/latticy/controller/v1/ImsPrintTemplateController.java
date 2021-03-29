@@ -1,6 +1,9 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import io.github.talelin.core.annotation.GroupRequired;
+import io.github.talelin.core.annotation.PermissionMeta;
+import io.github.talelin.core.annotation.PermissionModule;
 import io.github.talelin.latticy.service.ImsPrintTemplateService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +26,15 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/v1/ims-print-template")
+@PermissionModule(value = "企业管理")
 public class ImsPrintTemplateController {
 
     @Autowired
     ImsPrintTemplateService printTemplateService;
 
     @PostMapping("")
+    @PermissionMeta(value = "新增模版")
+    @GroupRequired
     public CreatedVO create(@RequestBody ImsPrintTemplateDO validator) {
         ImsPrintTemplateDO imsPrintTemplateDO = new ImsPrintTemplateDO();
         BeanUtils.copyProperties(validator, imsPrintTemplateDO);
@@ -51,6 +57,8 @@ public class ImsPrintTemplateController {
     }
 
     @DeleteMapping("/{id}")
+    @PermissionMeta(value = "删除模版")
+    @GroupRequired
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         return new DeletedVO();
     }

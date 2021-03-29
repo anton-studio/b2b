@@ -1,6 +1,12 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.github.talelin.core.annotation.GroupRequired;
+import io.github.talelin.core.annotation.LoginRequired;
+import io.github.talelin.core.annotation.PermissionMeta;
+import io.github.talelin.core.annotation.PermissionModule;
+import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.dto.ProductDTO;
 import io.github.talelin.latticy.service.PmsSpuInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +29,15 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("/v1/pms-spu-info")
+@PermissionModule(value = "产品管理")
 public class PmsSpuInfoController {
 
     @Autowired
     PmsSpuInfoService pmsSpuInfoService;
 
     @PostMapping("/product")
+    @PermissionMeta(value = "新增产品")
+    @GroupRequired
     public CreatedVO createProduct(@RequestBody ProductDTO validator) {
         pmsSpuInfoService.createFullProduct(validator);
         return new CreatedVO();
@@ -55,6 +64,8 @@ public class PmsSpuInfoController {
     }
 
     @PutMapping("/updateDetail/{id}")
+    @PermissionMeta(value = "更新产品")
+    @GroupRequired
     public UpdatedVO updateDetail(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id,
                                   @RequestBody ProductDTO validator) {
         pmsSpuInfoService.updateProduct(id, validator);
@@ -67,6 +78,8 @@ public class PmsSpuInfoController {
     }
 
     @DeleteMapping("/{id}")
+    @PermissionMeta(value = "删除产品", mount = false)
+    @GroupRequired
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         pmsSpuInfoService.deleteProduct(id);
         return new DeletedVO();

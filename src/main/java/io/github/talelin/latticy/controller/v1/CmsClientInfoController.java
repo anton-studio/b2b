@@ -19,6 +19,8 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,8 +81,15 @@ public class CmsClientInfoController {
     }
 
     @GetMapping("/list")
+    @LoginRequired
     public List<CmsClientInfoDO> list(){
-        return clientInfoService.getBaseMapper().selectList(null);
+        Long id = LocalUser.getLocalUser().getId();
+        QueryWrapper<CmsClientInfoDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(CmsClientInfoDO::getOwnedBy, id);
+        List<Long> adminIds = new ArrayList<>();
+        adminIds.add(1l);
+        Boolean showAll = adminIds.contains(id);
+        return clientInfoService.getBaseMapper().selectList(showAll ? null : wrapper);
     }
 
     @GetMapping("/page")

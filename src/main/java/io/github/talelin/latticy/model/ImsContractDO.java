@@ -26,6 +26,8 @@ public class ImsContractDO extends BaseModel {
 
     private Long totalAmount;
 
+    private Long prepayAmount;
+
     private Long actualDeliveryFee;
 
     private Long otherFee;
@@ -39,6 +41,8 @@ public class ImsContractDO extends BaseModel {
     private Long rawCost;
 
     private String reviewStatus;
+
+    private Long ownedBy;
 
     /**
      * if this address is null, use client address for contract printing
