@@ -9,6 +9,7 @@
         <result column="update_time" property="updateTime" />
         <result column="delete_time" property="deleteTime" />
         <result column="spu_name" property="spuName" />
+        <result column="supplier" property="supplier" />
         <result column="spu_description" property="spuDescription" />
         <result column="catalog_id" property="catalogId" />
         <result column="attr_group_id" property="attrGroupId" />

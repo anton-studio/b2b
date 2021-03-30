@@ -27,6 +27,10 @@ public class PmsSkuInfoDO extends BaseModel {
      */
     private String skuName;
 
+    private String rawPrice;
+
+    private String productSize;
+
     /**
      * sku介绍描述
      */

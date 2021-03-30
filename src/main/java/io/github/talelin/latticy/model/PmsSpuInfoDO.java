@@ -24,6 +24,8 @@ public class PmsSpuInfoDO extends BaseModel {
 
     private String certificates;
 
+    private String supplier;
+
     /**
      * 商品描述
      */
