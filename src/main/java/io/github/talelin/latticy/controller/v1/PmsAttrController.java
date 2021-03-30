@@ -42,7 +42,9 @@ public class PmsAttrController {
     }
 
     @PutMapping("/{id}")
-    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id) {
+    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id, @RequestBody PmsAttrDO pmsAttrDO) {
+        pmsAttrDO.setId(id);
+        pmsAttrService.updateById(pmsAttrDO);
         return new UpdatedVO();
     }
 
@@ -62,7 +64,16 @@ public class PmsAttrController {
         PmsAttrDO pmsAttrDO = pmsAttrService.getBaseMapper().selectById(id);
         List<PmsProductAttrValueDO> attrValueList = productAttrValueService.getByAttrId(id);
         PmsAttrDTO pmsAttrDTO = new PmsAttrDTO();
-//        BeanUtils.copyProperties(pmsAttrDO, pmsAttrDTO);
+        BeanUtils.copyProperties(pmsAttrDO, pmsAttrDTO);
+
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < attrValueList.size(); i++) {
+            s.append(attrValueList.get(i).getAttrValue());
+            if (attrValueList.size() - 1 > i) {
+                s.append(',');
+            }
+        }
+        pmsAttrDTO.setValueList(s.toString());
 //        pmsAttrDTO.setValueList(attrValueList);
         return pmsAttrDTO;
     }
