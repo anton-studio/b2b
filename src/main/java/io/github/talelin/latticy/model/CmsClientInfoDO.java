@@ -43,6 +43,10 @@ public class CmsClientInfoDO extends BaseModel {
      */
     private String industry;
 
+    private String category;
+
+    private String notes;
+
     private String source;
 
     /**

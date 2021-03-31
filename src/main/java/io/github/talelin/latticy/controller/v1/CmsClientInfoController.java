@@ -2,9 +2,12 @@ package io.github.talelin.latticy.controller.v1;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.core.annotation.Required;
 import io.github.talelin.latticy.common.LocalUser;
+import io.github.talelin.latticy.common.util.PageUtil;
 import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.model.CmsClientFilesDO;
 import io.github.talelin.latticy.service.CmsClientInfoService;
@@ -100,7 +103,9 @@ public class CmsClientInfoController {
             @RequestParam(name = "page", required = false, defaultValue = "0")
             @Min(value = 0, message = "{page.number.min}") Long page
     ) {
-        return null;
+        IPage<CmsClientInfoDO> myPage = new Page<>(page,count);
+        IPage<CmsClientInfoDO> cmsClientInfoDOIPage = clientInfoService.getBaseMapper().selectPage(myPage, null);
+        return PageUtil.build(myPage, cmsClientInfoDOIPage.getRecords());
     }
 
 }
