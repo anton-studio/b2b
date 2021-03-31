@@ -96,6 +96,7 @@ public class CmsClientInfoController {
     }
 
     @GetMapping("/page")
+    @LoginRequired
     public PageResponseVO<CmsClientInfoDO> page(
             @RequestParam(name = "count", required = false, defaultValue = "10")
             @Min(value = 1, message = "{page.count.min}")
@@ -104,7 +105,13 @@ public class CmsClientInfoController {
             @Min(value = 0, message = "{page.number.min}") Long page
     ) {
         IPage<CmsClientInfoDO> myPage = new Page<>(page,count);
-        IPage<CmsClientInfoDO> cmsClientInfoDOIPage = clientInfoService.getBaseMapper().selectPage(myPage, null);
+        Long id = LocalUser.getLocalUser().getId();
+        QueryWrapper<CmsClientInfoDO> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(CmsClientInfoDO::getOwnedBy, id);
+        List<Long> adminIds = new ArrayList<>();
+        adminIds.add(1l);
+        Boolean showAll = adminIds.contains(id);
+        IPage<CmsClientInfoDO> cmsClientInfoDOIPage = clientInfoService.getBaseMapper().selectPage(myPage, showAll ? null : wrapper);
         return PageUtil.build(myPage, cmsClientInfoDOIPage.getRecords());
     }
 
