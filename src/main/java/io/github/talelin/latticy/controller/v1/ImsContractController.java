@@ -43,6 +43,7 @@ public class ImsContractController {
     }
 
     @PostMapping("")
+    @LoginRequired
     public CreatedVO create(@RequestBody ContractDTO validator) {
         contractService.createContract(validator);
         return new CreatedVO();
