@@ -50,18 +50,21 @@ public class ImsContractController {
     }
 
     @PutMapping("/{id}")
+    @LoginRequired
     public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id, @RequestBody ContractDTO validator) {
         contractService.updateContract(id, validator);
         return new UpdatedVO();
     }
 
     @DeleteMapping("/{id}")
+    @LoginRequired
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         contractService.delete(id);
         return new DeletedVO();
     }
 
     @GetMapping("/{id}")
+    @LoginRequired
     public ContractDTO get(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id) {
         return contractService.getContractDetail(id);
     }
