@@ -66,13 +66,13 @@ public class PmsSkuInfoDO extends BaseModel {
     /**
      * kg
      */
-    private Long weight;
+    private Float weight;
 
     private Long quantityPerCarton;
 
-    private Long netWeightPerCarton;
+    private Float netWeightPerCarton;
 
-    private Long grossWeightPerCarton;
+    private Float grossWeightPerCarton;
 
     private String cartonMeasurement;
 
