@@ -28,4 +28,5 @@ spring:
   servlet:
     multipart:
       # 总体文件最大体积（只能从max-file-size设置总体文件的大小）
-      max-file-size: 2000000MB
+      max-file-size: 500000MB
+      max-request-size: 500000MB
