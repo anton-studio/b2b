@@ -134,4 +134,10 @@ public class UserController {
         List<GroupDO> groups = groupService.getUserGroupsByUserId(user.getId());
         return new UserInfoVO(user, groups);
     }
+
+    @GetMapping("/list")
+    public List<UserDO> list() {
+        List<UserDO> userDOS = userService.getBaseMapper().selectList(null);
+        return userDOS;
+    }
 }
