@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.github.talelin.latticy.model.BaseModel;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -63,6 +64,9 @@ public class ImsContractDO extends BaseModel {
     private BigDecimal insuranceCost;
 
     private BigDecimal additionalCost;
+
+    @TableField("PI_NO")
+    private String PINo;
 
 
 }

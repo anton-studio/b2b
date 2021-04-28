@@ -2,6 +2,7 @@ package io.github.talelin.latticy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.github.talelin.autoconfigure.exception.ParameterException;
 import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.dto.ContractDTO;
 import io.github.talelin.latticy.mapper.ImsContractProductMapper;
@@ -16,11 +17,10 @@ import io.github.talelin.latticy.vo.PrintDataVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * <p>
@@ -55,6 +55,8 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
 
         Long id = LocalUser.getLocalUser().getId();
         imsContractDO.setOwnedBy(id);
+
+        imsContractDO.setPINo(this.generatePINo(validator.getClientId()));
 
         this.getBaseMapper().insert(imsContractDO);
 
@@ -130,9 +132,6 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
         BeanUtils.copyProperties(validator, imsContractDO);
         imsContractDO.setId(id);
 
-        Long ownById = LocalUser.getLocalUser().getId();
-        imsContractDO.setOwnedBy(ownById);
-
         contractMapper.updateById(imsContractDO);
 
         // delete contract products
@@ -147,5 +146,24 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
             imsContractProductDO.setContractId(imsContractDO.getId());
             contractProductMapper.insert(imsContractProductDO);
         }
+    }
+
+    private String generatePINo(Long clientId) {
+        CmsClientInfoDO cmsClientInfoDO = clientInfoService.getBaseMapper().selectById(clientId);
+        String clientCode = cmsClientInfoDO.getCode();
+        if(StringUtils.isEmpty(clientCode) || clientCode.contains("missing")) {
+            throw new ParameterException("客户代码不完整, 请检查好你的客户代码再提交");
+        }
+        UserDO localUser = LocalUser.getLocalUser();
+        String nickName = localUser.getNickname();
+        nickName = nickName.toUpperCase().substring(0, 2);
+        if (StringUtils.isEmpty(nickName)) {
+            nickName = "st";
+        }
+        String month = new Date().getMonth() < 10 ? '0' + String.valueOf(new Date().getMonth()) : String.valueOf(new Date().getMonth());
+        String ranNo1 = String.valueOf(ThreadLocalRandom.current().nextInt());
+        String ranNo2 = String.valueOf(ThreadLocalRandom.current().nextInt());
+        String code = clientCode + nickName + month + ranNo1 + ranNo2;
+        return code;
     }
 }
