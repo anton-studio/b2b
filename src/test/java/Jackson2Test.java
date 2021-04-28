@@ -5,8 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class Jackson2Test {
@@ -29,5 +32,20 @@ public class Jackson2Test {
         String str = "userAge";
         String s = StrUtil.toUnderlineCase(str);
         log.info(s);
+    }
+
+    @Test
+    public void month() {
+        Integer month = new Date().getMonth() + 1;
+        String monthStr = month < 10 ? "0" + String.valueOf(month) : String.valueOf(month);
+
+        int max = 9;
+        int min = 0;
+
+        String ranNo1 = String.valueOf((int )(Math.random() * max + min));
+        String ranNo2 = String.valueOf((int )(Math.random() * max + min));
+        String code = monthStr + ranNo1 + ranNo2;
+        System.out.println(code);
+
     }
 }

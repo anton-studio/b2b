@@ -160,10 +160,15 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
         if (StringUtils.isEmpty(nickName)) {
             nickName = "st";
         }
-        String month = new Date().getMonth() < 10 ? '0' + String.valueOf(new Date().getMonth()) : String.valueOf(new Date().getMonth());
-        String ranNo1 = String.valueOf(ThreadLocalRandom.current().nextInt());
-        String ranNo2 = String.valueOf(ThreadLocalRandom.current().nextInt());
-        String code = clientCode + nickName + month + ranNo1 + ranNo2;
+        Integer month = new Date().getMonth() + 1;
+        String monthStr = month < 10 ? "0" + String.valueOf(month) : String.valueOf(month);
+
+        int max = 9;
+        int min = 0;
+
+        String ranNo1 = String.valueOf((int )(Math.random() * max + min));
+        String ranNo2 = String.valueOf((int )(Math.random() * max + min));
+        String code = clientCode + nickName + monthStr + ranNo1 + ranNo2;
         return code;
     }
 }
