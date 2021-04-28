@@ -2,6 +2,8 @@ package io.github.talelin.latticy.model;
 
 import io.github.talelin.latticy.model.BaseModel;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,13 +26,13 @@ public class ImsContractDO extends BaseModel {
 
     private Long clientId;
 
-    private Long totalAmount;
+    private BigDecimal totalAmount;
 
-    private Long prepayAmount;
+    private BigDecimal prepayAmount;
 
-    private Long actualDeliveryFee;
+    private BigDecimal actualDeliveryFee;
 
-    private Long otherFee;
+    private BigDecimal otherFee;
 
     private String paymentMethod;
 
@@ -38,7 +40,7 @@ public class ImsContractDO extends BaseModel {
 
     private String paymentStatus;
 
-    private Long rawCost;
+    private BigDecimal rawCost;
 
     private String reviewStatus;
 
@@ -52,15 +54,15 @@ public class ImsContractDO extends BaseModel {
     /**
      * usd
      */
-    private Long shippingCost;
+    private BigDecimal shippingCost;
 
-    private Long transactionFee;
+    private BigDecimal transactionFee;
 
     private String termsOfSale;
 
-    private String insuranceCost;
+    private BigDecimal insuranceCost;
 
-    private String additionalCost;
+    private BigDecimal additionalCost;
 
 
 }

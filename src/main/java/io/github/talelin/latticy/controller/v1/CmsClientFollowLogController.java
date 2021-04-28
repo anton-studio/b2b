@@ -3,7 +3,6 @@ package io.github.talelin.latticy.controller.v1;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.talelin.core.annotation.LoginRequired;
-import io.github.talelin.latticy.model.CmsContractDO;
 import io.github.talelin.latticy.service.CmsClientFollowLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

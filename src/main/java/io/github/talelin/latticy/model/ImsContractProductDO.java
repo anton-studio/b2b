@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
+
 /**
  * @author generator@TaleLin
  * @since 2021-03-25
@@ -28,7 +30,7 @@ public class ImsContractProductDO extends BaseModel {
     /**
      * contract price(real unit price)
      */
-    private Long price;
+    private BigDecimal price;
 
     /**
      * write your own
