@@ -27,5 +27,35 @@
         <result column="insurance_cost" property="insuranceCost" />
         <result column="additional_cost" property="additionalCost" />
     </resultMap>
+    <select id="selectWithFilter" resultType="io.github.talelin.latticy.model.ImsContractDO">
+        SELECT * FROM ims_contract
+        <where>
+            <if test="params.owned_by != null">
+                owned_by = #{params.owned_by}
+            </if>
+            <if test="params.PI_NO != null">
+                AND PI_NO LIKE CONCAT('%',#{params.PI_NO},'%')
+            </if>
+            <if test="params.payment_status != null">
+                AND payment_status IN
+                <foreach collection="params.payment_status" item="status" open="(" close=")" separator=",">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="params.review_status != null">
+                AND review_status IN
+                <foreach collection="params.review_status" item="rstatus" open="(" close=")" separator=",">
+                    #{rstatus}
+                </foreach>
+            </if>
+            <if test="params.payment_method != null">
+                AND payment_method IN
+                <foreach collection="params.payment_method" item="pmethod" open="(" close=")" separator=",">
+                    #{pmethod}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
 
 </mapper>

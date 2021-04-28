@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.dto.ContractDTO;
+import io.github.talelin.latticy.mapper.ImsContractMapper;
 import io.github.talelin.latticy.mapper.ImsContractProductMapper;
 import io.github.talelin.latticy.model.CmsClientInfoDO;
 import io.github.talelin.latticy.model.ImsContractProductDO;
@@ -35,6 +36,9 @@ public class ImsContractController {
 
     @Autowired
     ImsContractProductMapper contractProductMapper;
+
+    @Autowired
+    ImsContractMapper contractMapper;
 
     @GetMapping("/getPrintData/{id}")
     @LoginRequired
@@ -87,6 +91,13 @@ public class ImsContractController {
         adminIds.add(1l);
         Boolean showAll = adminIds.contains(id);
         return contractService.getBaseMapper().selectList(showAll ? null : wrapper);
+    }
+
+    @PostMapping("/searchlist")
+    @LoginRequired
+    public List<ImsContractDO> searchList(@RequestBody Map<String, Object> params){
+        // todo below code maybe need change
+        return contractMapper.selectWithFilter(params);
     }
 
     @GetMapping("/page")
