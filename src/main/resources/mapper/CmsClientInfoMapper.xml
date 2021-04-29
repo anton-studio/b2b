@@ -22,5 +22,58 @@
     <select id="getPublicSeaClient" resultMap="BaseResultMap">
         select * from cms_client_info where owned_by IS NULL or owned_by=0
     </select>
+    <select id="selectWithFilter" resultType="io.github.talelin.latticy.model.CmsClientInfoDO">
+        SELECT * FROM cms_client_info
+        <where>
+            <if test="params.owned_by != null">
+                owned_by IN
+                <foreach collection="params.owned_by" item="uid" open="(" close=")" separator=",">
+                    #{uid}
+                </foreach>
+            </if>
+            <if test="params.client_name != null">
+                AND client_name LIKE CONCAT('%',#{params.client_name},'%')
+            </if>
+            <if test="params.company_name != null">
+                AND company_name LIKE CONCAT('%',#{params.company_name},'%')
+            </if>
+            <if test="params.code != null">
+                AND code LIKE CONCAT('%',#{params.code},'%')
+            </if>
+            <if test="params.country != null">
+                AND country IN
+                <foreach collection="params.country" item="status" open="(" close=")" separator=",">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="params.client_level != null">
+                AND client_level IN
+                <foreach collection="params.client_level" item="status" open="(" close=")" separator=",">
+                    #{status}
+                </foreach>
+            </if>
+            <if test="params.industry != null">
+                AND industry IN
+                <foreach collection="params.industry" item="rstatus" open="(" close=")" separator=",">
+                    #{rstatus}
+                </foreach>
+            </if>
+            <if test="params.source != null">
+                AND source IN
+                <foreach collection="params.source" item="pmethod" open="(" close=")" separator=",">
+                    #{pmethod}
+                </foreach>
+            </if>
+            <if test="params.category != null">
+                AND category IN
+                <foreach collection="params.category" item="pmethod" open="(" close=")" separator=",">
+                    #{pmethod}
+                </foreach>
+            </if>
+            <if test="true == true">
+                AND delete_time IS NULL
+            </if>
+        </where>
+    </select>
 
 </mapper>

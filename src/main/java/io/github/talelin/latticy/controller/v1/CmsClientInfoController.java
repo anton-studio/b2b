@@ -10,6 +10,8 @@ import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.common.util.PageUtil;
 import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.model.CmsClientFilesDO;
+import io.github.talelin.latticy.model.ImsContractDO;
+import io.github.talelin.latticy.model.UserDO;
 import io.github.talelin.latticy.service.CmsClientInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +26,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author generator@TaleLin
@@ -95,24 +99,33 @@ public class CmsClientInfoController {
         return clientInfoService.getBaseMapper().selectList(showAll ? null : wrapper);
     }
 
-    @GetMapping("/page")
+    @PostMapping("/page")
     @LoginRequired
     public PageResponseVO<CmsClientInfoDO> page(
             @RequestParam(name = "count", required = false, defaultValue = "10")
             @Min(value = 1, message = "{page.count.min}")
             @Max(value = 30, message = "{page.count.max}") Long count,
             @RequestParam(name = "page", required = false, defaultValue = "0")
-            @Min(value = 0, message = "{page.number.min}") Long page
+            @Min(value = 0, message = "{page.number.min}") Long page,
+            @RequestBody Map<String, Object> params
     ) {
-        IPage<CmsClientInfoDO> myPage = new Page<>(page,count);
-        Long id = LocalUser.getLocalUser().getId();
-        QueryWrapper<CmsClientInfoDO> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(CmsClientInfoDO::getOwnedBy, id);
-        List<Long> adminIds = new ArrayList<>();
-        adminIds.add(1l);
-        Boolean showAll = adminIds.contains(id);
-        IPage<CmsClientInfoDO> cmsClientInfoDOIPage = clientInfoService.getBaseMapper().selectPage(myPage, showAll ? null : wrapper);
-        return PageUtil.build(myPage, cmsClientInfoDOIPage.getRecords());
+//        IPage<CmsClientInfoDO> myPage = new Page<>(page,count);
+//        Long id = LocalUser.getLocalUser().getId();
+//        QueryWrapper<CmsClientInfoDO> wrapper = new QueryWrapper<>();
+//        wrapper.lambda().eq(CmsClientInfoDO::getOwnedBy, id);
+//        List<Long> adminIds = new ArrayList<>();
+//        adminIds.add(1l);
+//        Boolean showAll = adminIds.contains(id);
+//        IPage<CmsClientInfoDO> cmsClientInfoDOIPage = clientInfoService.getBaseMapper().selectPage(myPage, showAll ? null : wrapper);
+//        return PageUtil.build(myPage, cmsClientInfoDOIPage.getRecords());
+
+        UserDO user = LocalUser.getLocalUser();
+        if (!Arrays.asList(1l, 2l).contains(user.getId())) {
+            // sales
+            params.put("owned_by", Arrays.asList(user.getId()));
+        }
+        IPage<CmsClientInfoDO> res = clientInfoService.getPageWithFilter(page, count, params);
+        return PageUtil.build(res);
     }
 
 }

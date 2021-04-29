@@ -1,13 +1,13 @@
 package io.github.talelin.latticy.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import io.github.talelin.latticy.common.LocalUser;
+import io.github.talelin.latticy.common.mybatis.Page;
 import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.mapper.CmsClientInterestMapper;
-import io.github.talelin.latticy.model.CmsClientInfoDO;
+import io.github.talelin.latticy.model.*;
 import io.github.talelin.latticy.mapper.CmsClientInfoMapper;
-import io.github.talelin.latticy.model.CmsClientInterestDO;
-import io.github.talelin.latticy.model.PmsAttrDO;
-import io.github.talelin.latticy.model.UserDO;
 import io.github.talelin.latticy.service.CmsClientInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.talelin.latticy.service.CmsClientInterestService;
@@ -15,8 +15,10 @@ import org.apache.tomcat.jni.Local;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -115,6 +117,19 @@ public class CmsClientInfoServiceImpl extends ServiceImpl<CmsClientInfoMapper, C
     @Override
     public List<CmsClientInfoDO> getPublicSeaClients() {
         return clientInfoMapper.getPublicSeaClient();
+    }
+
+    @Override
+    public IPage<CmsClientInfoDO> getPageWithFilter(Long page, Long count, Map<String, Object> params) {
+        Page<CmsClientInfoDO> pager = new Page<>(page, count);
+        if (StringUtils.hasText((String) params.get("sort"))) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setColumn((String) params.get("sort"));
+            orderItem.setAsc(!"DESC".equals(params.get("order")));
+            pager.addOrder(orderItem);
+        }
+        IPage<CmsClientInfoDO> clientPage = clientInfoMapper.selectWithFilter(pager, params);
+        return clientPage;
     }
 
 }

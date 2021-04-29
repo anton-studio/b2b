@@ -1,10 +1,12 @@
 package io.github.talelin.latticy.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.github.talelin.latticy.dto.ClientDTO;
 import io.github.talelin.latticy.model.CmsClientInfoDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,4 +27,6 @@ public interface CmsClientInfoService extends IService<CmsClientInfoDO> {
     ClientDTO getClientWithDetail(Long id);
 
     List<CmsClientInfoDO> getPublicSeaClients();
+
+    IPage<CmsClientInfoDO> getPageWithFilter(Long page, Long count, Map<String, Object> params);
 }
