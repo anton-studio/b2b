@@ -95,7 +95,7 @@ public class UserMapperTest {
 //        map.put("owned_by", 1);
 //        map.put("payment_status", new String[]{"支付预付款"});
         map.put("payment_method", new String[]{"PayPal"});
-        List<ImsContractDO> imsContractDOS = contractMapper.selectWithFilter(map);
-        System.out.println(imsContractDOS);
+//        List<ImsContractDO> imsContractDOS = contractMapper.selectWithFilter(map);
+//        System.out.println(imsContractDOS);
     }
 }

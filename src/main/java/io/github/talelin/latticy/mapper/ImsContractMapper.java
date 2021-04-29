@@ -1,7 +1,10 @@
 package io.github.talelin.latticy.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.github.talelin.latticy.common.mybatis.Page;
 import io.github.talelin.latticy.model.ImsContractDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.github.talelin.latticy.model.LogDO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +21,5 @@ import java.util.Map;
  */
 @Repository
 public interface ImsContractMapper extends BaseMapper<ImsContractDO> {
-    List<ImsContractDO> selectWithFilter(@Param("params") Map<String, Object> params);
+    IPage<ImsContractDO> selectWithFilter(Page<ImsContractDO> pager, @Param("params") Map<String, Object> params);
 }

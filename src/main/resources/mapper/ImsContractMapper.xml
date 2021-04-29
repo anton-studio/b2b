@@ -54,7 +54,13 @@
                     #{pmethod}
                 </foreach>
             </if>
+            <if test="true == true">
+                AND delete_time IS NULL
+            </if>
         </where>
+        <if test="params.sort != null">
+            order by #{params.sort} #{params.order};
+        </if>
     </select>
 
 

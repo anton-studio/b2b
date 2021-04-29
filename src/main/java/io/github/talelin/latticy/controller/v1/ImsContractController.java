@@ -2,8 +2,10 @@ package io.github.talelin.latticy.controller.v1;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.latticy.common.LocalUser;
+import io.github.talelin.latticy.common.util.PageUtil;
 import io.github.talelin.latticy.dto.ContractDTO;
 import io.github.talelin.latticy.mapper.ImsContractMapper;
 import io.github.talelin.latticy.mapper.ImsContractProductMapper;
@@ -93,22 +95,29 @@ public class ImsContractController {
         return contractService.getBaseMapper().selectList(showAll ? null : wrapper);
     }
 
-    @PostMapping("/searchlist")
-    @LoginRequired
-    public List<ImsContractDO> searchList(@RequestBody Map<String, Object> params){
-        // todo below code maybe need change
-        return contractMapper.selectWithFilter(params);
-    }
+//    @PostMapping("/searchlist")
+//    @LoginRequired
+//    public PageResponseVO<ImsContractDO> searchList(@RequestParam(name = "count", required = false, defaultValue = "10")
+//                                              @Min(value = 1, message = "{page.count.min}")
+//                                              @Max(value = 30, message = "{page.count.max}") Long count,
+//                                          @RequestParam(name = "page", required = false, defaultValue = "0")
+//                                              @Min(value = 0, message = "{page.number.min}") Long page,
+//                                          @RequestBody Map<String, Object> params){
+//        // todo below code maybe need change
+//        return contractService.getPageWithFilter(page, count, params);
+//    }
 
-    @GetMapping("/page")
+    @PostMapping("/page")
     public PageResponseVO<ImsContractDO> page(
             @RequestParam(name = "count", required = false, defaultValue = "10")
             @Min(value = 1, message = "{page.count.min}")
             @Max(value = 30, message = "{page.count.max}") Long count,
             @RequestParam(name = "page", required = false, defaultValue = "0")
-            @Min(value = 0, message = "{page.number.min}") Long page
+            @Min(value = 0, message = "{page.number.min}") Long page,
+            @RequestBody Map<String, Object> params
     ) {
-        return null;
+        IPage<ImsContractDO> res = contractService.getPageWithFilter(page, count, params);
+        return PageUtil.build(res);
     }
 
 }

@@ -1,9 +1,12 @@
 package io.github.talelin.latticy.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.github.talelin.latticy.dto.ContractDTO;
 import io.github.talelin.latticy.model.ImsContractDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.github.talelin.latticy.vo.PrintDataVO;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -24,4 +27,6 @@ public interface ImsContractService extends IService<ImsContractDO> {
     ContractDTO getContractDetail(Long id);
 
     PrintDataVO getDataForPrint(Long id);
+
+    IPage<ImsContractDO> getPageWithFilter(Long page, Long count, Map<String, Object> params);
 }
