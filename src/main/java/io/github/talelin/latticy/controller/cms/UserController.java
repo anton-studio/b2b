@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.controller.cms;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.github.talelin.autoconfigure.exception.NotFoundException;
 import io.github.talelin.autoconfigure.exception.ParameterException;
 import io.github.talelin.core.annotation.AdminRequired;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -136,8 +138,15 @@ public class UserController {
     }
 
     @GetMapping("/list")
+    @LoginRequired
     public List<UserDO> list() {
-        List<UserDO> userDOS = userService.getBaseMapper().selectList(null);
+        QueryWrapper<UserDO> wrapper = null;
+        UserDO user = LocalUser.getLocalUser();
+        if (!Arrays.asList(1l, 2l).contains(user.getId())) {
+            wrapper = new QueryWrapper<>();
+            wrapper.lambda().eq(UserDO::getId, user.getId());
+        }
+        List<UserDO> userDOS = userService.getBaseMapper().selectList(wrapper);
         return userDOS;
     }
 }

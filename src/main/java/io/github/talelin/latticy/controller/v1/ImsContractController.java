@@ -11,6 +11,7 @@ import io.github.talelin.latticy.mapper.ImsContractMapper;
 import io.github.talelin.latticy.mapper.ImsContractProductMapper;
 import io.github.talelin.latticy.model.CmsClientInfoDO;
 import io.github.talelin.latticy.model.ImsContractProductDO;
+import io.github.talelin.latticy.model.UserDO;
 import io.github.talelin.latticy.service.ImsContractService;
 import io.github.talelin.latticy.vo.*;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -108,6 +110,7 @@ public class ImsContractController {
 //    }
 
     @PostMapping("/page")
+    @LoginRequired
     public PageResponseVO<ImsContractDO> page(
             @RequestParam(name = "count", required = false, defaultValue = "10")
             @Min(value = 1, message = "{page.count.min}")
@@ -116,6 +119,11 @@ public class ImsContractController {
             @Min(value = 0, message = "{page.number.min}") Long page,
             @RequestBody Map<String, Object> params
     ) {
+        UserDO user = LocalUser.getLocalUser();
+        if (!Arrays.asList(1l, 2l).contains(user.getId())) {
+            // sales
+            params.put("owned_by", Arrays.asList(user.getId()));
+        }
         IPage<ImsContractDO> res = contractService.getPageWithFilter(page, count, params);
         return PageUtil.build(res);
     }
