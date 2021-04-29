@@ -31,7 +31,10 @@
         SELECT * FROM ims_contract
         <where>
             <if test="params.owned_by != null">
-                owned_by = #{params.owned_by}
+                owned_by IN
+                <foreach collection="params.owned_by" item="uid" open="(" close=")" separator=",">
+                    #{uid}
+                </foreach>
             </if>
             <if test="params.PI_NO != null">
                 AND PI_NO LIKE CONCAT('%',#{params.PI_NO},'%')
@@ -58,9 +61,6 @@
                 AND delete_time IS NULL
             </if>
         </where>
-        <if test="params.sort != null">
-            order by #{params.sort} #{params.order};
-        </if>
     </select>
 
 

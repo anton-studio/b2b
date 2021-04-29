@@ -3,6 +3,7 @@ package io.github.talelin.latticy.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import io.github.talelin.autoconfigure.exception.ParameterException;
 import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.common.mybatis.Page;
@@ -120,6 +121,12 @@ public class ImsContractServiceImpl extends ServiceImpl<ImsContractMapper, ImsCo
     @Override
     public IPage<ImsContractDO> getPageWithFilter(Long page, Long count, Map<String, Object> params) {
         Page<ImsContractDO> pager = new Page<>(page, count);
+        if (StringUtils.hasText((String) params.get("sort"))) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setColumn((String) params.get("sort"));
+            orderItem.setAsc(!"DESC".equals(params.get("order")));
+            pager.addOrder(orderItem);
+        }
         IPage<ImsContractDO> imsContractDOIPage = contractMapper.selectWithFilter(pager, params);
         return imsContractDOIPage;
     }
