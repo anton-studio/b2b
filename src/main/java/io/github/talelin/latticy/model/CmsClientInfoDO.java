@@ -56,5 +56,7 @@ public class CmsClientInfoDO extends BaseModel {
 
     private String address;
 
+    private String email;
+
 
 }

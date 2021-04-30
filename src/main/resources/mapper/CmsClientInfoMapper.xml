@@ -37,6 +37,9 @@
             <if test="params.company_name != null">
                 AND company_name LIKE CONCAT('%',#{params.company_name},'%')
             </if>
+            <if test="params.email != null">
+                AND email LIKE CONCAT('%',#{params.email},'%')
+            </if>
             <if test="params.code != null">
                 AND code LIKE CONCAT('%',#{params.code},'%')
             </if>
@@ -74,6 +77,9 @@
                 AND delete_time IS NULL
             </if>
         </where>
+    </select>
+    <select id="countByEmail" resultType="java.lang.Integer">
+        SELECT COUNT(id) from b2b.cms_client_info where email = #{email}
     </select>
 
 </mapper>

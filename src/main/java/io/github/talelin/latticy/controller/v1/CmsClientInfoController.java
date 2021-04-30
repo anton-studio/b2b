@@ -52,6 +52,13 @@ public class CmsClientInfoController {
         return new CreatedVO();
     }
 
+    @GetMapping("/checkValid/{email}")
+    public Map<String, Boolean>isEmailValid(@PathVariable String email) {
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("isValid", clientInfoService.isEmailValid(email));
+        return map;
+    }
+
     @PutMapping("/{id}")
     public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
                             @RequestBody ClientDTO validator) {

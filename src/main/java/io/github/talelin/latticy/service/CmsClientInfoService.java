@@ -29,4 +29,6 @@ public interface CmsClientInfoService extends IService<CmsClientInfoDO> {
     List<CmsClientInfoDO> getPublicSeaClients();
 
     IPage<CmsClientInfoDO> getPageWithFilter(Long page, Long count, Map<String, Object> params);
+
+    Boolean isEmailValid(String email);
 }
