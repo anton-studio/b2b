@@ -3,29 +3,29 @@ package io.github.talelin.latticy.controller.v1;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.opencsv.CSVWriter;
+import io.github.talelin.core.annotation.AdminRequired;
 import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.common.util.PageUtil;
 import io.github.talelin.latticy.dto.ContractDTO;
 import io.github.talelin.latticy.mapper.ImsContractMapper;
 import io.github.talelin.latticy.mapper.ImsContractProductMapper;
-import io.github.talelin.latticy.model.CmsClientInfoDO;
-import io.github.talelin.latticy.model.ImsContractProductDO;
 import io.github.talelin.latticy.model.UserDO;
 import io.github.talelin.latticy.service.ImsContractService;
 import io.github.talelin.latticy.vo.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.github.talelin.latticy.model.ImsContractDO;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
 * @author generator@TaleLin
@@ -126,6 +126,36 @@ public class ImsContractController {
         }
         IPage<ImsContractDO> res = contractService.getPageWithFilter(page, count, params);
         return PageUtil.build(res);
+    }
+
+    @GetMapping("/export")
+    @AdminRequired
+    public void export(HttpServletResponse response) throws IOException {
+        List<ImsContractDO> contractDOList = contractService.getBaseMapper().selectList(null);
+        List<String[]> list = new ArrayList<>();
+        list.add(new String[]{
+                        "ID",
+                        "Contract Time",
+                        "Total Amount"
+                }
+        ); // csv header
+        for (ImsContractDO item : contractDOList) {
+            list.add(new String[]{
+                            item.getId().toString(),
+                            item.getContractTime().toString(),
+                            item.getTotalAmount().toString()
+                    }
+            );
+        }
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=client_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+        try (CSVWriter writer = new CSVWriter(response.getWriter())) {
+            writer.writeAll(list);
+        }
     }
 
 }
