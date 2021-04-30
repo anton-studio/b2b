@@ -4,6 +4,8 @@ package io.github.talelin.latticy.controller.v1;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.opencsv.CSVWriter;
+import io.github.talelin.core.annotation.AdminRequired;
 import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.core.annotation.Required;
 import io.github.talelin.latticy.common.LocalUser;
@@ -21,14 +23,15 @@ import io.github.talelin.latticy.vo.DeletedVO;
 import io.github.talelin.latticy.vo.PageResponseVO;
 import io.github.talelin.latticy.vo.UpdatedVO;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
 * @author generator@TaleLin
@@ -120,12 +123,48 @@ public class CmsClientInfoController {
 //        return PageUtil.build(myPage, cmsClientInfoDOIPage.getRecords());
 
         UserDO user = LocalUser.getLocalUser();
+        // public sea
+        if (params != null && params.get("owned_by") != null && params.get("owned_by").toString().contains("[0]")) {
+            params.put("owned_by", Arrays.asList(0l));
+            IPage<CmsClientInfoDO> res = clientInfoService.getPageWithFilter(page, count, params);
+            return PageUtil.build(res);
+        }
         if (!Arrays.asList(1l, 2l).contains(user.getId())) {
             // sales
             params.put("owned_by", Arrays.asList(user.getId()));
         }
         IPage<CmsClientInfoDO> res = clientInfoService.getPageWithFilter(page, count, params);
         return PageUtil.build(res);
+    }
+
+    @GetMapping("/export")
+    @AdminRequired
+    public void export(HttpServletResponse response) throws IOException {
+        List<CmsClientInfoDO> clientList = clientInfoService.getBaseMapper().selectList(null);
+        List<String[]> list = new ArrayList<>();
+        list.add(new String[]{
+                        "ID",
+                        "client name",
+                        "Address"
+                }
+        ); // csv header
+        for (CmsClientInfoDO item : clientList) {
+            list.add(new String[]{
+                            item.getId().toString(),
+                            item.getClientName(),
+                            item.getAddress()
+                    }
+            );
+        }
+        response.setContentType("text/csv");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=client_" + currentDateTime + ".csv";
+        response.setHeader(headerKey, headerValue);
+        try (CSVWriter writer = new CSVWriter(response.getWriter())) {
+            writer.writeAll(list);
+        }
     }
 
 }
