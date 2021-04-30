@@ -15,6 +15,7 @@ import io.github.talelin.latticy.model.CmsClientFilesDO;
 import io.github.talelin.latticy.model.ImsContractDO;
 import io.github.talelin.latticy.model.UserDO;
 import io.github.talelin.latticy.service.CmsClientInfoService;
+import io.github.talelin.latticy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import io.github.talelin.latticy.model.CmsClientInfoDO;
@@ -43,6 +44,9 @@ public class CmsClientInfoController {
 
     @Autowired
     CmsClientInfoService clientInfoService;
+
+    @Autowired
+    UserService userService;
 
 
     @PostMapping("")
@@ -140,6 +144,14 @@ public class CmsClientInfoController {
         if (!Arrays.asList(1l, 2l).contains(user.getId())) {
             // sales
             params.put("owned_by", Arrays.asList(user.getId()));
+        } else {
+            // need to get all user id, but not the 0l as this will be public sea
+            List<UserDO> userDOS = userService.getBaseMapper().selectList(null);
+            List<Long> allUids = new ArrayList<>();
+            for (UserDO userDO : userDOS) {
+                allUids.add(userDO.getId());
+            }
+            params.put("owned_by", allUids);
         }
         IPage<CmsClientInfoDO> res = clientInfoService.getPageWithFilter(page, count, params);
         return PageUtil.build(res);

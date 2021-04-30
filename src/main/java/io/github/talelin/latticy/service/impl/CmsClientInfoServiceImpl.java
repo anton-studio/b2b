@@ -103,7 +103,7 @@ public class CmsClientInfoServiceImpl extends ServiceImpl<CmsClientInfoMapper, C
         CmsClientInfoDO cmsClientInfoDO = clientInfoMapper.selectById(id);
         BeanUtils.copyProperties(cmsClientInfoDO, clientDTO);
 
-        if(cmsClientInfoDO.getOwnedBy() != null) {
+        if(cmsClientInfoDO.getOwnedBy() != null && cmsClientInfoDO.getOwnedBy() != 0l) {
             clientDTO.setIsInPublicSea(false);
         } else {
             clientDTO.setIsInPublicSea(true);
