@@ -60,6 +60,7 @@ public class CmsClientInfoController {
     }
 
     @DeleteMapping("/{id}")
+    @AdminRequired
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         clientInfoService.deleteClient(id);
         return new DeletedVO();
