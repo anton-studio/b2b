@@ -1,6 +1,7 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import io.github.talelin.core.annotation.AdminRequired;
 import io.github.talelin.latticy.model.CmsClientFilesDO;
 import io.github.talelin.latticy.service.PmsProductFilesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class PmsProductFilesController {
     }
 
     @PutMapping("/{id}")
+    @AdminRequired
     public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
                             @RequestBody Map<String, String> fileNameMap) {
         PmsProductFilesDO productFilesDO = productFilesService.getBaseMapper().selectById(id);
@@ -49,6 +51,7 @@ public class PmsProductFilesController {
     }
 
     @DeleteMapping("/{id}")
+    @AdminRequired
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
         productFilesService.getBaseMapper().deleteById(id);
         return new DeletedVO();
