@@ -54,6 +54,8 @@ public class CmsClientFollowLogController {
     public List<CmsClientFollowLogDO> listByClientId(@PathVariable(value = "id") @Positive(message = "{id.positive}") Long id){
         QueryWrapper<CmsClientFollowLogDO> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(CmsClientFollowLogDO::getClientId, id);
+        wrapper.lambda().orderByDesc(CmsClientFollowLogDO::getFollowTime);
+        wrapper.lambda().orderByDesc(CmsClientFollowLogDO::getCreateTime);
         return clientFollowLogService.getBaseMapper().selectList(wrapper);
     }
 

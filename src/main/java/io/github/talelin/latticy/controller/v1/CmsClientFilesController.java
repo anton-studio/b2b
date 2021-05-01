@@ -16,6 +16,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author generator@TaleLin
@@ -40,12 +41,17 @@ public class CmsClientFilesController {
     }
 
     @PutMapping("/{id}")
-    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id) {
+    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
+                            @RequestBody Map<String, String> fileNameMap) {
+        CmsClientFilesDO cmsClientFilesDO = clientFilesService.getBaseMapper().selectById(id);
+        cmsClientFilesDO.setFileName(fileNameMap.get("fileName"));
+        clientFilesService.updateById(cmsClientFilesDO);
         return new UpdatedVO();
     }
 
     @DeleteMapping("/{id}")
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        clientFilesService.getBaseMapper().deleteById(id);
         return new DeletedVO();
     }
 
