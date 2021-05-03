@@ -1,6 +1,9 @@
 package io.github.talelin.latticy.controller.v1;
 
 
+import io.github.talelin.autoconfigure.exception.ParameterException;
+import io.github.talelin.core.annotation.LoginRequired;
+import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.model.CmsClientFollowLogDO;
 import io.github.talelin.latticy.model.PmsProductFilesDO;
 import io.github.talelin.latticy.service.CmsClientFilesService;
@@ -30,7 +33,10 @@ public class CmsClientFilesController {
     CmsClientFilesService clientFilesService;
 
     @PostMapping("")
+    @LoginRequired
     public CreatedVO create(@RequestBody CmsClientFilesDO validator) {
+        Long currentUid = LocalUser.getLocalUser().getId();
+        validator.setOwnedBy(currentUid);
         clientFilesService.create(validator);
         return new CreatedVO();
     }
@@ -41,16 +47,30 @@ public class CmsClientFilesController {
     }
 
     @PutMapping("/{id}")
+    @LoginRequired
     public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
                             @RequestBody Map<String, String> fileNameMap) {
         CmsClientFilesDO cmsClientFilesDO = clientFilesService.getBaseMapper().selectById(id);
+
+        Long currentUid = LocalUser.getLocalUser().getId();
+        if (cmsClientFilesDO.getOwnedBy() != null && !currentUid.equals(cmsClientFilesDO.getOwnedBy())) {
+            throw new ParameterException("无法更改别人的文件");
+        }
+
         cmsClientFilesDO.setFileName(fileNameMap.get("fileName"));
         clientFilesService.updateById(cmsClientFilesDO);
         return new UpdatedVO();
     }
 
     @DeleteMapping("/{id}")
+    @LoginRequired
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        CmsClientFilesDO cmsClientFilesDO = clientFilesService.getBaseMapper().selectById(id);
+
+        Long currentUid = LocalUser.getLocalUser().getId();
+        if (cmsClientFilesDO.getOwnedBy() != null && !currentUid.equals(cmsClientFilesDO.getOwnedBy())) {
+            throw new ParameterException("无法删除别人的文件");
+        }
         clientFilesService.getBaseMapper().deleteById(id);
         return new DeletedVO();
     }

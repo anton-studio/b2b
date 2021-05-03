@@ -149,4 +149,11 @@ public class UserController {
         List<UserDO> userDOS = userService.getBaseMapper().selectList(wrapper);
         return userDOS;
     }
+
+    @GetMapping("/listForReplace")
+    @LoginRequired
+    public List<UserDO> listForReplace() {
+        List<UserDO> userDOS = userService.getBaseMapper().selectList(null);
+        return userDOS;
+    }
 }

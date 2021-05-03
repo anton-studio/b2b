@@ -2,7 +2,10 @@ package io.github.talelin.latticy.controller.v1;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.github.talelin.autoconfigure.exception.ParameterException;
+import io.github.talelin.core.annotation.Logger;
 import io.github.talelin.core.annotation.LoginRequired;
+import io.github.talelin.latticy.common.LocalUser;
 import io.github.talelin.latticy.service.CmsClientFollowLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +39,29 @@ public class CmsClientFollowLogController {
     }
 
     @PutMapping("/{id}")
-    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id) {
+    @LoginRequired
+    public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id, @RequestBody CmsClientFollowLogDO validator) {
+        Long currentUserId = LocalUser.getLocalUser().getId();
+        CmsClientFollowLogDO cmsClientFollowLogDO = clientFollowLogService.getBaseMapper().selectById(id);
+        if (!cmsClientFollowLogDO.getUserId().equals(currentUserId)) {
+            throw new ParameterException("无权修改别人的跟进记录");
+        }
+        cmsClientFollowLogDO.setFollowTime(validator.getFollowTime());
+        cmsClientFollowLogDO.setContent(validator.getContent());
+        cmsClientFollowLogDO.setStar(validator.getStar());
+        clientFollowLogService.updateById(cmsClientFollowLogDO);
         return new UpdatedVO();
     }
 
     @DeleteMapping("/{id}")
+    @LoginRequired
     public DeletedVO delete(@PathVariable @Positive(message = "{id.positive}") Long id) {
+        Long currentUserId = LocalUser.getLocalUser().getId();
+        CmsClientFollowLogDO cmsClientFollowLogDO = clientFollowLogService.getBaseMapper().selectById(id);
+        if (!cmsClientFollowLogDO.getUserId().equals(currentUserId)) {
+            throw new ParameterException("无权删除别人的跟进记录");
+        }
+        clientFollowLogService.getBaseMapper().deleteById(id);
         return new DeletedVO();
     }
 

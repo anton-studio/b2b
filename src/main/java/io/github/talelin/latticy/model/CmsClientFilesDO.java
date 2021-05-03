@@ -23,5 +23,7 @@ public class CmsClientFilesDO extends BaseModel {
 
     private String fileUrl;
 
+    private Long ownedBy;
+
 
 }

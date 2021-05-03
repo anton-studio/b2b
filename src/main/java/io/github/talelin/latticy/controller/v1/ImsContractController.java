@@ -4,6 +4,7 @@ package io.github.talelin.latticy.controller.v1;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.opencsv.CSVWriter;
+import io.github.talelin.autoconfigure.exception.ParameterException;
 import io.github.talelin.core.annotation.AdminRequired;
 import io.github.talelin.core.annotation.LoginRequired;
 import io.github.talelin.latticy.common.LocalUser;
@@ -60,6 +61,10 @@ public class ImsContractController {
     @PutMapping("/{id}")
     @LoginRequired
     public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id, @RequestBody ContractDTO validator) {
+        ImsContractDO contractFromDB = contractService.getBaseMapper().selectById(id);
+        if("已审核".equals(contractFromDB.getReviewStatus())) {
+            throw new ParameterException("禁止修改已审核合同");
+        }
         contractService.updateContract(id, validator);
         return new UpdatedVO();
     }
