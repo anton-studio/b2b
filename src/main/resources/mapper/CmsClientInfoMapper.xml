@@ -81,5 +81,8 @@
     <select id="countByEmail" resultType="java.lang.Integer">
         SELECT COUNT(id) from b2b.cms_client_info where email = #{email}
     </select>
+    <select id="countByCode" resultType="java.lang.Integer">
+        SELECT COUNT(id) from b2b.cms_client_info where code = #{code}
+    </select>
 
 </mapper>

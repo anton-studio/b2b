@@ -137,4 +137,9 @@ public class CmsClientInfoServiceImpl extends ServiceImpl<CmsClientInfoMapper, C
         return clientInfoMapper.countByEmail(email) == 0;
     }
 
+    @Override
+    public Boolean isCodeValid(String code) {
+        return clientInfoMapper.countByCode(code) == 0;
+    }
+
 }

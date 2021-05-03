@@ -25,4 +25,6 @@ public interface CmsClientInfoMapper extends BaseMapper<CmsClientInfoDO> {
     List<CmsClientInfoDO> getPublicSeaClient();
     IPage<CmsClientInfoDO> selectWithFilter(Page<CmsClientInfoDO> pager, @Param("params") Map<String, Object> params);
     Integer countByEmail(@Param("email")String email);
+
+    Integer countByCode(@Param("code") String code);
 }

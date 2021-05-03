@@ -63,6 +63,13 @@ public class CmsClientInfoController {
         return map;
     }
 
+    @GetMapping("/checkValidCode/{code}")
+    public Map<String, Boolean>isCodeValid(@PathVariable String code) {
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("isValid", clientInfoService.isCodeValid(code));
+        return map;
+    }
+
     @PutMapping("/{id}")
     public UpdatedVO update(@PathVariable @Positive(message = "{id.positive}") Long id,
                             @RequestBody ClientDTO validator) {
