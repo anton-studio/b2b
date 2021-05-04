@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,19 +52,31 @@ public class CmsClientInfoServiceImpl extends ServiceImpl<CmsClientInfoMapper, C
             cmsClientInfoDO.setOwnedBy(localUser.getId());
         }
 
-        // save user
-        clientInfoMapper.insert(cmsClientInfoDO);
-
-        // save interests
-        for (CmsClientInterestDO interestProduct : validator.getInterestProducts()) {
-            CmsClientInterestDO cmsClientInterestDO = new CmsClientInterestDO();
-            BeanUtils.copyProperties(interestProduct, cmsClientInterestDO);
-            cmsClientInterestDO.setClientId(cmsClientInfoDO.getId());
-
-            clientInterestMapper.insert(cmsClientInterestDO);
+        // validate email
+        if (!this.isEmailValid(validator.getEmail())) {
+            return false;
         }
 
-        return true;
+        // validate code
+        if (!this.isCodeValid(validator.getCode())) {
+            return false;
+        }
+
+        // save user
+        int insertCount = clientInfoMapper.insert(cmsClientInfoDO);
+
+        // save interests
+        if (validator.getInterestProducts() != null) {
+            for (CmsClientInterestDO interestProduct : validator.getInterestProducts()) {
+                CmsClientInterestDO cmsClientInterestDO = new CmsClientInterestDO();
+                BeanUtils.copyProperties(interestProduct, cmsClientInterestDO);
+                cmsClientInterestDO.setClientId(cmsClientInfoDO.getId());
+
+                clientInterestMapper.insert(cmsClientInterestDO);
+            }
+        }
+
+        return insertCount == 1;
     }
 
     @Override
@@ -140,6 +154,23 @@ public class CmsClientInfoServiceImpl extends ServiceImpl<CmsClientInfoMapper, C
     @Override
     public Boolean isCodeValid(String code) {
         return clientInfoMapper.countByCode(code) == 0;
+    }
+
+    @Override
+    public Map<String, List<ClientDTO>> importAll(List<ClientDTO> validator) {
+        List<ClientDTO> successList = new ArrayList<>();
+        List<ClientDTO> failList = new ArrayList<>();
+        for (ClientDTO clientDTO : validator) {
+            if (this.create(clientDTO)) {
+                successList.add(clientDTO);
+            } else {
+                failList.add(clientDTO);
+            }
+        }
+        Map<String, List<ClientDTO>> map = new HashMap<>();
+        map.put("successList", successList);
+        map.put("failList", failList);
+        return map;
     }
 
 }

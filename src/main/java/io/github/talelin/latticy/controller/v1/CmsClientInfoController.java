@@ -56,6 +56,13 @@ public class CmsClientInfoController {
         return new CreatedVO();
     }
 
+    @PostMapping("/importClients")
+    @LoginRequired
+    public Map<String, List<ClientDTO>> importAll(@RequestBody List<ClientDTO> validator) {
+        Map<String, List<ClientDTO>> importResult = clientInfoService.importAll(validator);
+        return importResult;
+    }
+
     @GetMapping("/checkValid/{email}")
     public Map<String, Boolean>isEmailValid(@PathVariable String email) {
         Map<String, Boolean> map = new HashMap<>();

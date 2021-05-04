@@ -33,4 +33,6 @@ public interface CmsClientInfoService extends IService<CmsClientInfoDO> {
     Boolean isEmailValid(String email);
 
     Boolean isCodeValid(String code);
+
+    Map<String, List<ClientDTO>> importAll(List<ClientDTO> validator);
 }
